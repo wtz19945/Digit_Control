@@ -2,12 +2,16 @@
 
 ## Note
 Compiling the code requires an updated of version of gcc (version 7.5 at least) and Cmake (version 3.14 as least). If you have issues, please check the following link:
+
 CMAKE: https://gist.github.com/bmegli/4049b7394f9cfa016c24ed67e5041930
+
 GCC  : https://tuxamito.com/wiki/index.php/Installing_newer_GCC_versions_in_Ubuntu
 
 ## Library Requirements
 To run the code, you need to install the following libraries 
+
 OSQP-Eigen: https://robotology.github.io/osqp-eigen/
+
             https://github.com/robotology/osqp-eigen
 
 ## Start Simulator
@@ -26,4 +30,5 @@ To compile the code, run:
 - ./standing_control
 
 When the operation mode is set to low-level-api, you should see optimization status from the terminal and digit starts moving.
+
 Note that you need to modify the directories depending on where you store the files.
