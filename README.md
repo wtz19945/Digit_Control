@@ -25,7 +25,7 @@ To enable controller via low-level-api operation mode, check the following link 
 
 ## Compile the code
 To compile the code, run:
-- cmake
+- cmake ./
 - make standing_control
 - ./standing_control
 
