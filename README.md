@@ -10,9 +10,9 @@ GCC  : https://tuxamito.com/wiki/index.php/Installing_newer_GCC_versions_in_Ubun
 ## Library Requirements
 To run the code, you need to install the following libraries 
 
-OSQP-Eigen: https://robotology.github.io/osqp-eigen/
+OSQP-Eigen Documentation: https://robotology.github.io/osqp-eigen/
 
-            https://github.com/robotology/osqp-eigen
+OSQP-Eigen Github       : https://github.com/robotology/osqp-eigen
 
 ## Start Simulator
 To run the Agility simulator, run the following command
