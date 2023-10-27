@@ -1,0 +1,6 @@
+# Add robot model to simulation in a face-down pose
+[world.package.body]
+type = "box"
+size = [0.4, 0.4, 0.4]
+pose = {xyz = [0, 0, 0.2]}
+mass = 1.0

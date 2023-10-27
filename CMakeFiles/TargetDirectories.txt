@@ -1,0 +1,13 @@
+/home/orl/Tianze_WS/Test_Control/CMakeFiles/rebuild_cache.dir
+/home/orl/Tianze_WS/Test_Control/CMakeFiles/edit_cache.dir
+/home/orl/Tianze_WS/Test_Control/CMakeFiles/cmake_hello.dir
+/home/orl/Tianze_WS/Test_Control/CMakeFiles/standing_control.dir
+/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/CMakeFiles/edit_cache.dir
+/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/CMakeFiles/rebuild_cache.dir
+/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/CMakeFiles/GeometricKinematicsTest.dir
+/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/CMakeFiles/geometric_kinematics_lib.dir
+/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/CMakeFiles/GeometricKinematicsMain.dir
+/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics/CMakeFiles/edit_cache.dir
+/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics/CMakeFiles/kinematics_dynamics_lib.dir
+/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics/CMakeFiles/rebuild_cache.dir
+/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics/CMakeFiles/kin_dyn_test.dir
