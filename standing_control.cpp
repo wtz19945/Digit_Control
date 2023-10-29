@@ -31,6 +31,8 @@
 #include "analytical_expressions.hpp"
 #include "kin_left_arm.hpp"
 #include "kin_right_arm.hpp"
+#include "cpptoml/include/cpptoml.h"
+//#include "toml.hpp"
 
 // TODO: Move to head file
 namespace joint{
@@ -154,6 +156,52 @@ int main(int argc, char* argv[])
 
   // Get local copy of command limits (torque and damping)
   const llapi_limits_t* limits = llapi_get_limits();
+  
+  // Load Gains
+  std::shared_ptr<cpptoml::table> config = cpptoml::parse_file("/home/orl/Tianze_WS/Test_Control/src/config_file/osc_robot_config.toml");
+  double cpx = config->get_qualified_as<double>("PD-Gains.com_P_gain_x").value_or(0);
+  double cpy = config->get_qualified_as<double>("PD-Gains.com_P_gain_y").value_or(0);
+  double cpz = config->get_qualified_as<double>("PD-Gains.com_P_gain_z").value_or(0);
+  double cprz = config->get_qualified_as<double>("PD-Gains.com_P_gain_rz").value_or(0);
+  double cpry = config->get_qualified_as<double>("PD-Gains.com_P_gain_ry").value_or(0);
+  double cprx = config->get_qualified_as<double>("PD-Gains.com_P_gain_rx").value_or(0);
+
+  double cdx = config->get_qualified_as<double>("PD-Gains.com_D_gain_x").value_or(0);
+  double cdy = config->get_qualified_as<double>("PD-Gains.com_D_gain_y").value_or(0);
+  double cdz = config->get_qualified_as<double>("PD-Gains.com_D_gain_z").value_or(0);
+  double cdrz = config->get_qualified_as<double>("PD-Gains.com_D_gain_rz").value_or(0);
+  double cdry = config->get_qualified_as<double>("PD-Gains.com_D_gain_ry").value_or(0);
+  double cdrx = config->get_qualified_as<double>("PD-Gains.com_D_gain_rx").value_or(0);
+
+  double fpx = config->get_qualified_as<double>("PD-Gains.foot_P_x").value_or(0);
+  double fpy = config->get_qualified_as<double>("PD-Gains.foot_P_y").value_or(0);
+  double fpz = config->get_qualified_as<double>("PD-Gains.foot_P_z").value_or(0);
+  double fdx = config->get_qualified_as<double>("PD-Gains.foot_D_x").value_or(0);
+  double fdy = config->get_qualified_as<double>("PD-Gains.foot_D_y").value_or(0);
+  double fdz = config->get_qualified_as<double>("PD-Gains.foot_D_z").value_or(0);
+
+  double Wcom = config->get_qualified_as<double>("QP-Params.com_W").value_or(0);
+  double Wff  = config->get_qualified_as<double>("QP-Params.st_foot_W").value_or(0);
+  double Wfb  = config->get_qualified_as<double>("QP-Params.st_foot_W").value_or(0);
+
+  double force_max = config->get_qualified_as<double>("QP-Params.force_max").value_or(0);
+  double mu = config->get_qualified_as<double>("QP-Params.mu").value_or(0);
+
+  MatrixXd Weight_ToeF = Wff*MatrixXd::Identity(6,6);
+  VectorXd KP_ToeF = VectorXd::Zero(6,1);
+  VectorXd KD_ToeF = VectorXd::Zero(6,1);
+  KP_ToeF << fpx,fpy,fpz,fpx,fpy,fpz;
+  KD_ToeF << fdx,fdy,fdz,fdx,fdy,fdz;
+
+  MatrixXd Weight_ToeB = Wfb*MatrixXd::Identity(8,8);
+  VectorXd KP_ToeB = KP_ToeF;
+  VectorXd KD_ToeB = KD_ToeF;
+
+  MatrixXd Weight_pel = Wcom * MatrixXd::Identity(6,6);
+  VectorXd KP_pel = VectorXd::Zero(6,1);
+  VectorXd KD_pel = VectorXd::Zero(6,1);
+  KP_pel << cpx,cpy,cpz,cprz,cpry,cprx;
+  KD_pel << cdx,cdy,cdz,cdrz,cdry,cdrx;
 
   while (1) {
     // Update observation
@@ -278,11 +326,7 @@ int main(int argc, char* argv[])
     //right_toe_pos_ref(2) = -0.7;
 
     // Toe weights and Gains
-    MatrixXd Weight_ToeF = 1050*MatrixXd::Identity(6,6);
-    VectorXd KP_ToeF = VectorXd::Zero(6,1);
-    VectorXd KD_ToeF = VectorXd::Zero(6,1);
-    KP_ToeF << 225,225,225,225,225,225;
-    KD_ToeF << 2,2,2,2,2,2;
+
 
     // compute target position acc
     VectorXd des_acc = VectorXd::Zero(6,1);
@@ -295,9 +339,7 @@ int main(int argc, char* argv[])
 
 
     // Control another contact point on toe back to enable foot rotation control
-    MatrixXd Weight_ToeB = 1050*MatrixXd::Identity(8,8);
-    VectorXd KP_ToeB = KP_ToeF;
-    VectorXd KD_ToeB = KD_ToeF;
+
 
     VectorXd left_toe_rot  = VectorXd::Zero(4,1);
     VectorXd left_toe_drot = VectorXd::Zero(4,1);
@@ -354,10 +396,7 @@ int main(int argc, char* argv[])
     // For pelvis control in standing OSC
     VectorXd des_acc_pel = VectorXd::Zero(6,1);
     VectorXd des_acc_stf = VectorXd::Zero(6,1);
-    VectorXd KP_pel = VectorXd::Zero(6,1);
-    VectorXd KD_pel = VectorXd::Zero(6,1);
-    KP_pel << 20,20,50,50,50,50;
-    KD_pel << 5,5,5,2,2,2;
+
 
     MatrixXd pel_jaco = MatrixXd::Zero(6,20);
     pel_jaco.block(0,0,6,6) = MatrixXd::Identity(6,6);
@@ -368,8 +407,7 @@ int main(int argc, char* argv[])
                    -KP_pel(4) * (theta(1) - 0) - KD_pel(4) * (dtheta(1) - 0),
                    -KP_pel(5) * (theta(0) - 0) - KD_pel(5) * (dtheta(0) - 0);
 
-    MatrixXd Weight_pel = 150 * MatrixXd::Identity(6,6);
-    Weight_pel(2,2) = 150; // height control should dominate
+
     // Solve OSC QP
     int Vars_Num = 20 + 12 + 4 + 12;
     int Cons_Num = 20 + 4 + Vars_Num;
@@ -412,12 +450,12 @@ int main(int argc, char* argv[])
     u_limit  << 116.682, 70.1765, 206.928,220.928,35.9759,35.9759,116.682, 70.1765, 206.928,220.928,35.9759,35.9759;
     tor_limit<< OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY;
     for(int i=0;i<12;i++){
-      f_limit(i) = 240;
+      f_limit(i) = force_max * mu;
     }
-    f_limit(2) = 400;
-    f_limit(5) = 400;
-    f_limit(8) = 400;
-    f_limit(11) = 400;
+    f_limit(2) = force_max;
+    f_limit(5) = force_max;
+    f_limit(8) = force_max;
+    f_limit(11) = force_max;
     // Incorporate damping command into OSC
     VectorXd damping(20),D_term(20);;
     damping << VectorXd::Zero(6,1), 66.849, 26.1129, 38.05, 38.05, 0 , 15.5532, 15.5532, 
@@ -570,9 +608,7 @@ int main(int argc, char* argv[])
       iter++;
     }
     
-    cout << "arm goal" << endl << p_lh << endl;
-    cout << "ql" << endl << ql << endl;
-    cout << "current" << wb_q.block(20,0,4,1) << endl;
+
     target_position[12] = ql(6);
     target_position[13] = ql(7);
     target_position[14] = ql(8);

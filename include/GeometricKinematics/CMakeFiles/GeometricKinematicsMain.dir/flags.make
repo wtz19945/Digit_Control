@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics -I/libartl -I/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics -I/home/orl/Tianze_WS/Test_Control/include/Eigen -I/home/orl/Tianze_WS/Test_Control/include
+CXX_INCLUDES = -I/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics -I/libartl -I/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics -I/home/orl/Tianze_WS/Test_Control/include/Eigen -I/home/orl/Tianze_WS/Test_Control/include -I/home/orl/Tianze_WS/Test_Control/include/cpptoml
 
 CXX_FLAGS = 
 

@@ -6,7 +6,8 @@ include_directories(/libartl
   include/AnalyticalKinematicsDynamics
   include/Eigen/
   /home/orl/Tianze_WS/Test_Control/include/Eigen
-  /home/orl/Tianze_WS/Test_Control/include)
+  /home/orl/Tianze_WS/Test_Control/include
+  /home/orl/Tianze_WS/Test_Control/include/cpptoml)
 add_subdirectory(include/GeometricKinematics)
 add_subdirectory(include/AnalyticalKinematicsDynamics)
 
