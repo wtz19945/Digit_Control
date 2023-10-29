@@ -118,7 +118,7 @@ static double target_position[] = {
 MatrixXd get_B(VectorXd q);
 MatrixXd get_Spring_Jaco();
 VectorXd ToEulerAngle(VectorXd q);
-
+MatrixXd get_fric_constraint(double mu);
 #define NUM_FROST_STATE 28
 #define NUM_Dyn_STATE 20
 using namespace std;
@@ -410,7 +410,7 @@ int main(int argc, char* argv[])
 
     // Solve OSC QP
     int Vars_Num = 20 + 12 + 4 + 12;
-    int Cons_Num = 20 + 4 + Vars_Num;
+    int Cons_Num = 20 + 4 + Vars_Num + 16;
     solver.data()->setNumberOfVariables(Vars_Num);
     solver.data()->setNumberOfConstraints(Cons_Num);
 
@@ -442,20 +442,32 @@ int main(int argc, char* argv[])
     VectorXd ddq_limit = VectorXd::Zero(20,1); // state acceleration 
     VectorXd u_limit = VectorXd::Zero(12,1);   // torque limits
     VectorXd tor_limit = VectorXd::Zero(4,1);  // generalized force
-    VectorXd f_limit = VectorXd::Zero(12,1);   // contact force
+    VectorXd f_limit_max = VectorXd::Zero(12,1);   // contact force
+    VectorXd f_limit_min = VectorXd::Zero(12,1);   // contact force
+    VectorXd f_cons_min = VectorXd::Zero(16,1);    // friction constraint limit
 
     for(int i=0;i<20;i++){
       ddq_limit(i) = OsqpEigen::INFTY;
     }
+    for(int i=0;i<16;i++){
+      f_cons_min(i) = -OsqpEigen::INFTY;
+    }
+
     u_limit  << 116.682, 70.1765, 206.928,220.928,35.9759,35.9759,116.682, 70.1765, 206.928,220.928,35.9759,35.9759;
     tor_limit<< OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY;
     for(int i=0;i<12;i++){
-      f_limit(i) = force_max * mu;
+      f_limit_max(i) = force_max * mu;
+      f_limit_min(i) = -force_max * mu;
     }
-    f_limit(2) = force_max;
-    f_limit(5) = force_max;
-    f_limit(8) = force_max;
-    f_limit(11) = force_max;
+    f_limit_max(2) = force_max;
+    f_limit_max(5) = force_max;
+    f_limit_max(8) = force_max;
+    f_limit_max(11) = force_max;
+    f_limit_min(2) = 0;
+    f_limit_min(5) = 0;
+    f_limit_min(8) = 0;
+    f_limit_min(11) = 0;
+
     // Incorporate damping command into OSC
     VectorXd damping(20),D_term(20);;
     damping << VectorXd::Zero(6,1), 66.849, 26.1129, 38.05, 38.05, 0 , 15.5532, 15.5532, 
@@ -465,8 +477,8 @@ int main(int argc, char* argv[])
     double damping_dt = 0.00;
 
     // Concatenate bound vector
-    lowerBound << -G -C + D_term, VectorXd::Zero(4,1) , -ddq_limit, -u_limit, -tor_limit, -f_limit;
-    upperBound << -G -C + D_term, VectorXd::Zero(4,1) ,  ddq_limit,  u_limit, tor_limit , f_limit;
+    lowerBound << -G -C + D_term, VectorXd::Zero(4,1) , -ddq_limit, -u_limit, -tor_limit, f_limit_min, f_cons_min;
+    upperBound << -G -C + D_term, VectorXd::Zero(4,1) ,  ddq_limit,  u_limit, tor_limit , f_limit_max, VectorXd::Zero(16,1);
     
     // Hessian Matrix
     MatrixXd hessian_full = MatrixXd::Zero(Vars_Num,Vars_Num);
@@ -488,7 +500,6 @@ int main(int argc, char* argv[])
     // Important Question??? seems not helping in standing phase. Maybe it is because the cross terms are not considered in
     // the fixed base controller
 
-
     // Constraint Matrix
     MatrixXd constraint_full = MatrixXd::Zero(Cons_Num,Vars_Num);
     constraint_full.block(0,0,20,20) = M - damping_dt * Dmat;
@@ -500,6 +511,8 @@ int main(int argc, char* argv[])
     constraint_full.block(0,45,20,3) = -right_toe_back_jaco_fa.transpose();
     constraint_full.block(20,0,4,20) = Spring_Jaco;
     constraint_full.block(24,0,Vars_Num,Vars_Num) = MatrixXd::Identity(Vars_Num,Vars_Num);
+    constraint_full.block(24+Vars_Num,Vars_Num-12,16,12) = get_fric_constraint(mu);
+
     for(int i = 0;i<constraint_full.rows();i++){
       for(int j = 0;j<constraint_full.cols();j++){
         if(constraint_full(i,j) != 0){
@@ -741,6 +754,15 @@ MatrixXd get_B(VectorXd q){
   return B;
 }
 
+MatrixXd get_fric_constraint(double mu){
+  MatrixXd fric_cons = MatrixXd::Zero(16,12);
+  MatrixXd fric_sub  = MatrixXd::Zero(4,3);
+  fric_sub << 1,1,-mu,1,-1,-mu,-1,1,-mu,-1,-1,-mu;
+  for(int i=0;i<4;i++){
+    fric_cons.block(4*i,3*i,4,3) = fric_sub;
+  }
+  return fric_cons;
+}
 VectorXd ToEulerAngle(VectorXd q){
     VectorXd theta = VectorXd::Zero(3,1);
     double w,x,y,z;
