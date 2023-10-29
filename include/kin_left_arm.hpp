@@ -17,7 +17,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "/home/orl/Tianze_WS/Test_Control/include/Eigen/Dense"
 
 /* Function Declarations */
 extern void kin_left_arm(const double q[10], double p_left_hand[3], double

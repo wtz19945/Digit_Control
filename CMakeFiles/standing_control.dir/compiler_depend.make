@@ -425,334 +425,7 @@ CMakeFiles/standing_control.dir/src/kin_left_arm.cpp.o: src/kin_left_arm.cpp \
   /usr/include/c++/7/stdlib.h \
   /usr/include/c++/7/cstdlib \
   /usr/include/string.h \
-  /usr/include/strings.h \
-  include/Eigen/Dense \
-  include/Eigen/Core \
-  include/Eigen/src/Core/util/DisableStupidWarnings.h \
-  /usr/include/c++/7/new \
-  /usr/include/c++/7/exception \
-  /usr/include/c++/7/bits/exception.h \
-  /usr/include/c++/7/bits/exception_ptr.h \
-  /usr/include/c++/7/bits/exception_defines.h \
-  /usr/include/c++/7/bits/cxxabi_init_exception.h \
-  /usr/include/c++/7/typeinfo \
-  /usr/include/c++/7/bits/hash_bytes.h \
-  /usr/include/c++/7/bits/nested_exception.h \
-  /usr/include/c++/7/bits/move.h \
-  /usr/include/c++/7/bits/concept_check.h \
-  /usr/include/c++/7/type_traits \
-  include/Eigen/src/Core/util/Macros.h \
-  /usr/include/c++/7/complex \
-  /usr/include/c++/7/sstream \
-  /usr/include/c++/7/istream \
-  /usr/include/c++/7/ios \
-  /usr/include/c++/7/iosfwd \
-  /usr/include/c++/7/bits/stringfwd.h \
-  /usr/include/c++/7/bits/memoryfwd.h \
-  /usr/include/c++/7/bits/postypes.h \
-  /usr/include/c++/7/cwchar \
-  /usr/include/wchar.h \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/stdarg.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
-  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
-  /usr/include/c++/7/bits/char_traits.h \
-  /usr/include/c++/7/bits/stl_algobase.h \
-  /usr/include/c++/7/bits/functexcept.h \
-  /usr/include/c++/7/ext/numeric_traits.h \
-  /usr/include/c++/7/bits/stl_pair.h \
-  /usr/include/c++/7/bits/stl_iterator_base_types.h \
-  /usr/include/c++/7/bits/stl_iterator_base_funcs.h \
-  /usr/include/c++/7/debug/assertions.h \
-  /usr/include/c++/7/bits/stl_iterator.h \
-  /usr/include/c++/7/bits/ptr_traits.h \
-  /usr/include/c++/7/debug/debug.h \
-  /usr/include/c++/7/bits/predefined_ops.h \
-  /usr/include/c++/7/cstdint \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/stdint.h \
-  /usr/include/stdint.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/c++/7/bits/localefwd.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/c++locale.h \
-  /usr/include/c++/7/clocale \
-  /usr/include/locale.h \
-  /usr/include/x86_64-linux-gnu/bits/locale.h \
-  /usr/include/c++/7/cctype \
-  /usr/include/ctype.h \
-  /usr/include/c++/7/bits/ios_base.h \
-  /usr/include/c++/7/ext/atomicity.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/gthr.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/gthr-default.h \
-  /usr/include/pthread.h \
-  /usr/include/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
-  /usr/include/time.h \
-  /usr/include/x86_64-linux-gnu/bits/time.h \
-  /usr/include/x86_64-linux-gnu/bits/timex.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
-  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/atomic_word.h \
-  /usr/include/c++/7/bits/locale_classes.h \
-  /usr/include/c++/7/string \
-  /usr/include/c++/7/bits/allocator.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/c++allocator.h \
-  /usr/include/c++/7/ext/new_allocator.h \
-  /usr/include/c++/7/bits/ostream_insert.h \
-  /usr/include/c++/7/bits/cxxabi_forced.h \
-  /usr/include/c++/7/bits/stl_function.h \
-  /usr/include/c++/7/backward/binders.h \
-  /usr/include/c++/7/bits/range_access.h \
-  /usr/include/c++/7/initializer_list \
-  /usr/include/c++/7/bits/basic_string.h \
-  /usr/include/c++/7/ext/alloc_traits.h \
-  /usr/include/c++/7/bits/alloc_traits.h \
-  /usr/include/c++/7/ext/string_conversions.h \
-  /usr/include/c++/7/cstdio \
-  /usr/include/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/libio.h \
-  /usr/include/x86_64-linux-gnu/bits/_G_config.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
-  /usr/include/c++/7/cerrno \
-  /usr/include/errno.h \
-  /usr/include/x86_64-linux-gnu/bits/errno.h \
-  /usr/include/linux/errno.h \
-  /usr/include/x86_64-linux-gnu/asm/errno.h \
-  /usr/include/asm-generic/errno.h \
-  /usr/include/asm-generic/errno-base.h \
-  /usr/include/c++/7/bits/functional_hash.h \
-  /usr/include/c++/7/bits/basic_string.tcc \
-  /usr/include/c++/7/bits/locale_classes.tcc \
-  /usr/include/c++/7/system_error \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/error_constants.h \
-  /usr/include/c++/7/stdexcept \
-  /usr/include/c++/7/streambuf \
-  /usr/include/c++/7/bits/streambuf.tcc \
-  /usr/include/c++/7/bits/basic_ios.h \
-  /usr/include/c++/7/bits/locale_facets.h \
-  /usr/include/c++/7/cwctype \
-  /usr/include/wctype.h \
-  /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/ctype_base.h \
-  /usr/include/c++/7/bits/streambuf_iterator.h \
-  /usr/include/x86_64-linux-gnu/c++/7/bits/ctype_inline.h \
-  /usr/include/c++/7/bits/locale_facets.tcc \
-  /usr/include/c++/7/bits/basic_ios.tcc \
-  /usr/include/c++/7/ostream \
-  /usr/include/c++/7/bits/ostream.tcc \
-  /usr/include/c++/7/bits/istream.tcc \
-  /usr/include/c++/7/bits/sstream.tcc \
-  include/Eigen/src/Core/util/MKL_support.h \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/mmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/emmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/xmmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/mm_malloc.h \
-  /usr/include/c++/7/cstddef \
-  /usr/include/c++/7/cassert \
-  /usr/include/assert.h \
-  /usr/include/c++/7/functional \
-  /usr/include/c++/7/tuple \
-  /usr/include/c++/7/utility \
-  /usr/include/c++/7/bits/stl_relops.h \
-  /usr/include/c++/7/array \
-  /usr/include/c++/7/bits/uses_allocator.h \
-  /usr/include/c++/7/bits/invoke.h \
-  /usr/include/c++/7/bits/std_function.h \
-  /usr/include/c++/7/bits/refwrap.h \
-  /usr/include/c++/7/cstring \
-  /usr/include/c++/7/limits \
-  /usr/include/c++/7/climits \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include-fixed/limits.h \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include-fixed/syslimits.h \
-  /usr/include/limits.h \
-  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
-  /usr/include/linux/limits.h \
-  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
-  /usr/include/c++/7/algorithm \
-  /usr/include/c++/7/bits/stl_algo.h \
-  /usr/include/c++/7/bits/algorithmfwd.h \
-  /usr/include/c++/7/bits/stl_heap.h \
-  /usr/include/c++/7/bits/stl_tempbuf.h \
-  /usr/include/c++/7/bits/stl_construct.h \
-  /usr/include/c++/7/bits/uniform_int_dist.h \
-  include/Eigen/src/Core/util/Constants.h \
-  include/Eigen/src/Core/util/Meta.h \
-  include/Eigen/src/Core/util/ForwardDeclarations.h \
-  include/Eigen/src/Core/util/StaticAssert.h \
-  include/Eigen/src/Core/util/XprHelper.h \
-  include/Eigen/src/Core/util/Memory.h \
-  include/Eigen/src/Core/NumTraits.h \
-  include/Eigen/src/Core/MathFunctions.h \
-  include/Eigen/src/Core/GenericPacketMath.h \
-  include/Eigen/src/Core/MathFunctionsImpl.h \
-  include/Eigen/src/Core/arch/Default/ConjHelper.h \
-  include/Eigen/src/Core/arch/SSE/PacketMath.h \
-  include/Eigen/src/Core/arch/SSE/MathFunctions.h \
-  include/Eigen/src/Core/arch/SSE/Complex.h \
-  include/Eigen/src/Core/arch/SSE/TypeCasting.h \
-  include/Eigen/src/Core/arch/CUDA/Half.h \
-  include/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
-  include/Eigen/src/Core/arch/CUDA/TypeCasting.h \
-  include/Eigen/src/Core/arch/Default/Settings.h \
-  include/Eigen/src/Core/functors/TernaryFunctors.h \
-  include/Eigen/src/Core/functors/BinaryFunctors.h \
-  include/Eigen/src/Core/functors/UnaryFunctors.h \
-  include/Eigen/src/Core/functors/NullaryFunctors.h \
-  include/Eigen/src/Core/functors/StlFunctors.h \
-  include/Eigen/src/Core/functors/AssignmentFunctors.h \
-  include/Eigen/src/Core/arch/CUDA/Complex.h \
-  include/Eigen/src/Core/IO.h \
-  include/Eigen/src/Core/DenseCoeffsBase.h \
-  include/Eigen/src/Core/DenseBase.h \
-  include/Eigen/src/plugins/BlockMethods.h \
-  include/Eigen/src/Core/MatrixBase.h \
-  include/Eigen/src/plugins/CommonCwiseUnaryOps.h \
-  include/Eigen/src/plugins/CommonCwiseBinaryOps.h \
-  include/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
-  include/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
-  include/Eigen/src/Core/EigenBase.h \
-  include/Eigen/src/Core/Product.h \
-  include/Eigen/src/Core/CoreEvaluators.h \
-  include/Eigen/src/Core/AssignEvaluator.h \
-  include/Eigen/src/Core/Assign.h \
-  include/Eigen/src/Core/ArrayBase.h \
-  include/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
-  include/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
-  include/Eigen/src/Core/util/BlasUtil.h \
-  include/Eigen/src/Core/DenseStorage.h \
-  include/Eigen/src/Core/NestByValue.h \
-  include/Eigen/src/Core/ReturnByValue.h \
-  include/Eigen/src/Core/NoAlias.h \
-  include/Eigen/src/Core/PlainObjectBase.h \
-  include/Eigen/src/Core/Matrix.h \
-  include/Eigen/src/Core/Array.h \
-  include/Eigen/src/Core/CwiseTernaryOp.h \
-  include/Eigen/src/Core/CwiseBinaryOp.h \
-  include/Eigen/src/Core/CwiseUnaryOp.h \
-  include/Eigen/src/Core/CwiseNullaryOp.h \
-  include/Eigen/src/Core/CwiseUnaryView.h \
-  include/Eigen/src/Core/SelfCwiseBinaryOp.h \
-  include/Eigen/src/Core/Dot.h \
-  include/Eigen/src/Core/StableNorm.h \
-  include/Eigen/src/Core/Stride.h \
-  include/Eigen/src/Core/MapBase.h \
-  include/Eigen/src/Core/Map.h \
-  include/Eigen/src/Core/Ref.h \
-  include/Eigen/src/Core/Block.h \
-  include/Eigen/src/Core/VectorBlock.h \
-  include/Eigen/src/Core/Transpose.h \
-  include/Eigen/src/Core/DiagonalMatrix.h \
-  include/Eigen/src/Core/Diagonal.h \
-  include/Eigen/src/Core/DiagonalProduct.h \
-  include/Eigen/src/Core/Redux.h \
-  include/Eigen/src/Core/Visitor.h \
-  include/Eigen/src/Core/Fuzzy.h \
-  include/Eigen/src/Core/Swap.h \
-  include/Eigen/src/Core/CommaInitializer.h \
-  include/Eigen/src/Core/GeneralProduct.h \
-  include/Eigen/src/Core/Solve.h \
-  include/Eigen/src/Core/Inverse.h \
-  include/Eigen/src/Core/SolverBase.h \
-  include/Eigen/src/Core/PermutationMatrix.h \
-  include/Eigen/src/Core/Transpositions.h \
-  include/Eigen/src/Core/TriangularMatrix.h \
-  include/Eigen/src/Core/SelfAdjointView.h \
-  include/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
-  include/Eigen/src/Core/products/Parallelizer.h \
-  include/Eigen/src/Core/ProductEvaluators.h \
-  include/Eigen/src/Core/products/GeneralMatrixVector.h \
-  include/Eigen/src/Core/products/GeneralMatrixMatrix.h \
-  include/Eigen/src/Core/SolveTriangular.h \
-  include/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
-  include/Eigen/src/Core/products/SelfadjointMatrixVector.h \
-  include/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
-  include/Eigen/src/Core/products/SelfadjointProduct.h \
-  include/Eigen/src/Core/products/SelfadjointRank2Update.h \
-  include/Eigen/src/Core/products/TriangularMatrixVector.h \
-  include/Eigen/src/Core/products/TriangularMatrixMatrix.h \
-  include/Eigen/src/Core/products/TriangularSolverMatrix.h \
-  include/Eigen/src/Core/products/TriangularSolverVector.h \
-  include/Eigen/src/Core/BandMatrix.h \
-  include/Eigen/src/Core/CoreIterators.h \
-  include/Eigen/src/Core/ConditionEstimator.h \
-  include/Eigen/src/Core/BooleanRedux.h \
-  include/Eigen/src/Core/Select.h \
-  include/Eigen/src/Core/VectorwiseOp.h \
-  include/Eigen/src/Core/Random.h \
-  include/Eigen/src/Core/Replicate.h \
-  include/Eigen/src/Core/Reverse.h \
-  include/Eigen/src/Core/ArrayWrapper.h \
-  include/Eigen/src/Core/GlobalFunctions.h \
-  include/Eigen/src/Core/util/ReenableStupidWarnings.h \
-  include/Eigen/LU \
-  include/Eigen/src/misc/Kernel.h \
-  include/Eigen/src/misc/Image.h \
-  include/Eigen/src/LU/FullPivLU.h \
-  include/Eigen/src/LU/PartialPivLU.h \
-  include/Eigen/src/LU/Determinant.h \
-  include/Eigen/src/LU/InverseImpl.h \
-  include/Eigen/src/LU/arch/Inverse_SSE.h \
-  include/Eigen/Cholesky \
-  include/Eigen/Jacobi \
-  include/Eigen/src/Jacobi/Jacobi.h \
-  include/Eigen/src/Cholesky/LLT.h \
-  include/Eigen/src/Cholesky/LDLT.h \
-  include/Eigen/QR \
-  include/Eigen/Householder \
-  include/Eigen/src/Householder/Householder.h \
-  include/Eigen/src/Householder/HouseholderSequence.h \
-  include/Eigen/src/Householder/BlockHouseholder.h \
-  include/Eigen/src/QR/HouseholderQR.h \
-  include/Eigen/src/QR/FullPivHouseholderQR.h \
-  include/Eigen/src/QR/ColPivHouseholderQR.h \
-  include/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
-  include/Eigen/SVD \
-  include/Eigen/src/misc/RealSvd2x2.h \
-  include/Eigen/src/SVD/UpperBidiagonalization.h \
-  include/Eigen/src/SVD/SVDBase.h \
-  include/Eigen/src/SVD/JacobiSVD.h \
-  include/Eigen/src/SVD/BDCSVD.h \
-  include/Eigen/Geometry \
-  include/Eigen/src/Geometry/OrthoMethods.h \
-  include/Eigen/src/Geometry/EulerAngles.h \
-  include/Eigen/src/Geometry/Homogeneous.h \
-  include/Eigen/src/Geometry/RotationBase.h \
-  include/Eigen/src/Geometry/Rotation2D.h \
-  include/Eigen/src/Geometry/Quaternion.h \
-  include/Eigen/src/Geometry/AngleAxis.h \
-  include/Eigen/src/Geometry/Transform.h \
-  include/Eigen/src/Geometry/Translation.h \
-  include/Eigen/src/Geometry/Scaling.h \
-  include/Eigen/src/Geometry/Hyperplane.h \
-  include/Eigen/src/Geometry/ParametrizedLine.h \
-  include/Eigen/src/Geometry/AlignedBox.h \
-  include/Eigen/src/Geometry/Umeyama.h \
-  include/Eigen/src/Geometry/arch/Geometry_SSE.h \
-  include/Eigen/Eigenvalues \
-  include/Eigen/src/Eigenvalues/Tridiagonalization.h \
-  include/Eigen/src/Eigenvalues/RealSchur.h \
-  include/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-  include/Eigen/src/Eigenvalues/EigenSolver.h \
-  include/Eigen/src/Eigenvalues/RealSchur.h \
-  include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
-  include/Eigen/src/Eigenvalues/Tridiagonalization.h \
-  include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
-  include/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-  include/Eigen/src/Eigenvalues/ComplexSchur.h \
-  include/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
-  include/Eigen/src/Eigenvalues/ComplexSchur.h \
-  include/Eigen/src/Eigenvalues/RealQZ.h \
-  include/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-  include/Eigen/src/Eigenvalues/RealQZ.h \
-  include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+  /usr/include/strings.h
 
 CMakeFiles/standing_control.dir/src/kin_right_arm.cpp.o: src/kin_right_arm.cpp \
   /usr/include/stdc-predef.h \
@@ -2963,33 +2636,11 @@ include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_right_elbow_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_toe_roll_src.h:
 
-include/AnalyticalKinematicsDynamics/kin/p_hip_rotation_right_src.h:
-
-include/Eigen/src/Core/Block.h:
-
-include/AnalyticalKinematicsDynamics/kin/Js_RightToeBottomFront_src.h:
-
-/usr/include/pthread.h:
-
-include/Eigen/src/Core/Stride.h:
-
-include/Eigen/src/Core/SelfCwiseBinaryOp.h:
-
-include/Eigen/src/Core/arch/CUDA/Complex.h:
-
-include/Eigen/src/Core/Array.h:
-
 include/AnalyticalKinematicsDynamics/kin/dT_shoulder_roll_joint_left_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/Js_knee_joint_right_src.h:
 
 include/Eigen/src/Core/PlainObjectBase.h:
-
-include/AnalyticalKinematicsDynamics/kin/dR_left_knee_src.h:
-
-/usr/include/c++/7/bits/stl_iterator_base_types.h:
-
-/usr/include/c++/7/new:
 
 include/Eigen/src/Eigenvalues/EigenSolver.h:
 
@@ -3027,6 +2678,10 @@ include/Eigen/src/Core/MatrixBase.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jb_right_hip_pitch_src.h:
 
+include/Eigen/src/Core/arch/CUDA/Complex.h:
+
+include/Eigen/src/Core/SelfCwiseBinaryOp.h:
+
 include/Eigen/src/Core/NoAlias.h:
 
 include/Eigen/src/Core/functors/BinaryFunctors.h:
@@ -3059,9 +2714,9 @@ include/AnalyticalKinematicsDynamics/kin/p_left_shoulder_pitch_src.h:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
-include/Eigen/src/Jacobi/Jacobi.h:
-
 /usr/include/x86_64-linux-gnu/sys/time.h:
+
+include/Eigen/src/Jacobi/Jacobi.h:
 
 include/AnalyticalKinematicsDynamics/kin/dJs_right_shoulder_roll_src.h:
 
@@ -3086,10 +2741,6 @@ include/AnalyticalKinematicsDynamics/kin/dR_RightToeBottom_src.h:
 /usr/include/wchar.h:
 
 /usr/include/c++/7/bits/uniform_int_dist.h:
-
-include/Eigen/src/Core/CwiseUnaryView.h:
-
-include/Eigen/src/Core/DenseBase.h:
 
 include/AnalyticalKinematicsDynamics/kin/dR_knee_joint_right_src.h:
 
@@ -3175,10 +2826,6 @@ include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_elbow_src.h:
 
 /usr/include/c++/7/cwctype:
 
-include/Eigen/src/Core/Map.h:
-
-include/Eigen/src/Core/StableNorm.h:
-
 /usr/include/c++/7/bits/functional_hash.h:
 
 include/AnalyticalKinematicsDynamics/kin/dJb_LeftToeBottomFront_src.h:
@@ -3210,14 +2857,6 @@ include/AnalyticalKinematicsDynamics/kin/Js_shoulder_roll_joint_left_src.h:
 include/AnalyticalKinematicsDynamics/kin/Jb_shoulder_pitch_joint_right_src.h:
 
 /usr/include/c++/7/ext/alloc_traits.h:
-
-include/AnalyticalKinematicsDynamics/kin/dR_shin_to_tarsus_right_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJb_toe_pitch_joint_right_src.h:
-
-/usr/include/c++/7/bits/range_access.h:
-
-include/Eigen/SparseCholesky:
 
 include/AnalyticalKinematicsDynamics/kin/dJs_RightToeBottomFront_src.h:
 
@@ -3281,13 +2920,15 @@ include/AnalyticalKinematicsDynamics/kin/dJp_left_hip_yaw_src.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/7/include/mm_malloc.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jp_left_hip_pitch_src.h:
-
-include/Eigen/src/Core/Dot.h:
-
-include/Eigen/src/Core/Redux.h:
-
 include/AnalyticalKinematicsDynamics/kin/Inertia_right_shoulder_pitch_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Js_RightToeBottomFront_src.h:
+
+/usr/include/pthread.h:
+
+include/AnalyticalKinematicsDynamics/kin/p_hip_rotation_right_src.h:
+
+include/Eigen/src/Core/Block.h:
 
 include/AnalyticalKinematicsDynamics/kin/Js_elbow_joint_right_src.h:
 
@@ -3295,27 +2936,99 @@ include/AnalyticalKinematicsDynamics/kin/Jdq_AMWorld_left_shoulder_yaw_src.h:
 
 /usr/include/c++/7/debug/assertions.h:
 
+include/AnalyticalKinematicsDynamics/kin/dR_left_knee_src.h:
+
+/usr/include/c++/7/new:
+
+/usr/include/c++/7/bits/stl_iterator_base_types.h:
+
+include/Eigen/src/Core/Stride.h:
+
 include/AnalyticalKinematicsDynamics/kin/dT_shoulder_pitch_joint_right_src.h:
 
 /usr/include/c++/7/ext/numeric_traits.h:
 
+include/Eigen/src/Core/DenseBase.h:
+
+include/Eigen/src/Core/CwiseUnaryView.h:
+
 /usr/include/c++/7/bits/stl_algobase.h:
+
+/usr/include/c++/7/bits/stringfwd.h:
+
+/usr/include/c++/7/type_traits:
+
+include/Eigen/src/Core/util/ReenableStupidWarnings.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJp_shoulder_roll_joint_right_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/T_left_shoulder_roll_src.h:
+
+/usr/include/c++/7/istream:
+
+/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed/limits.h:
+
+/usr/include/c++/7/ext/atomicity.h:
+
+include/Eigen/src/Core/products/GeneralMatrixVector.h:
+
+include/AnalyticalKinematicsDynamics/kin/R_right_hip_pitch_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/AMBody_left_toe_pitch_src.h:
+
+/usr/include/c++/7/sstream:
+
+include/AnalyticalKinematicsDynamics/kin/dJp_left_elbow_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJb_right_knee_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jb_left_elbow_src.h:
+
+/usr/include/c++/7/map:
+
+include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_hip_pitch_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJp_toe_pitch_joint_left_src.h:
+
+/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
+
+/usr/include/c++/7/bits/algorithmfwd.h:
+
+include/Eigen/src/Core/util/Macros.h:
+
+/usr/include/c++/7/bits/hash_bytes.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+
+/usr/include/c++/7/typeinfo:
+
+/usr/include/c++/7/bits/exception_defines.h:
 
 include/Eigen/src/Core/GeneralProduct.h:
 
-libartl/artl.h:
+/usr/include/c++/7/bits/nested_exception.h:
 
-include/Eigen/src/Core/VectorBlock.h:
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+include/AnalyticalKinematicsDynamics/kin/dR_right_toe_roll_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/dR_left_hip_pitch_src.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+include/Eigen/src/plugins/BlockMethods.h:
+
+include/Eigen/src/SparseLU/SparseLU_kernel_bmod.h:
+
+/usr/include/c++/7/ext/string_conversions.h:
+
+/usr/include/c++/7/climits:
 
 /usr/include/x86_64-linux-gnu/sys/stat.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/alloca.h:
-
-include/Eigen/src/Core/DiagonalMatrix.h:
-
-include/Eigen/src/Core/ProductEvaluators.h:
 
 include/AnalyticalKinematicsDynamics/kin/p_left_shoulder_roll_src.h:
 
@@ -3369,10 +3082,6 @@ include/Eigen/src/Core/NestByValue.h:
 
 include/MathExpr/math2mat.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
-
-/usr/include/linux/errno.h:
-
 include/AnalyticalKinematicsDynamics/kin/Jb_shoulder_yaw_joint_left_src.h:
 
 /usr/include/fcntl.h:
@@ -3395,10 +3104,6 @@ include/AnalyticalKinematicsDynamics/kin/T_BaseRotZ_src.h:
 
 /usr/include/x86_64-linux-gnu/sys/ttydefaults.h:
 
-include/Eigen/src/IterativeLinearSolvers/SolveWithGuess.h:
-
-/usr/include/x86_64-linux-gnu/bits/errno.h:
-
 /usr/include/c++/7/ext/new_allocator.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/7/include/stdbool.h:
@@ -3418,6 +3123,32 @@ include/AnalyticalKinematicsDynamics/kin/dT_left_shoulder_pitch_src.h:
 /usr/include/c++/7/bits/allocator.h:
 
 include/Eigen/src/Core/Solve.h:
+
+include/AnalyticalKinematicsDynamics/kin/dT_toe_pitch_joint_right_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/R_shoulder_yaw_joint_left_src.h:
+
+/usr/include/c++/7/algorithm:
+
+/usr/include/stdlib.h:
+
+include/AnalyticalKinematicsDynamics/kin/R_hip_abduction_right_src.h:
+
+include/GeometricKinematics/rtwtypes.h:
+
+include/AnalyticalKinematicsDynamics/kin/dT_hip_flexion_right_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/R_elbow_joint_left_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jp_hip_abduction_right_src.h:
+
+/usr/include/c++/7/iosfwd:
+
+include/AnalyticalKinematicsDynamics/kin/Jb_right_hip_roll_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJs_hip_rotation_right_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_tarsus_src.h:
 
 /usr/include/c++/7/bits/locale_facets.tcc:
 
@@ -3442,14 +3173,6 @@ include/Eigen/src/SVD/BDCSVD.h:
 include/Eigen/src/Core/Select.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jb_elbow_joint_right_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jp_toe_pitch_joint_left_src.h:
-
-include/Eigen/src/Core/functors/AssignmentFunctors.h:
-
-include/Eigen/src/LU/Determinant.h:
-
-/usr/include/c++/7/bits/alloc_traits.h:
 
 include/AnalyticalKinematicsDynamics/kin/dT_BasePosX_src.h:
 
@@ -3521,20 +3244,6 @@ include/AnalyticalKinematicsDynamics/kin/Js_torso_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/AMWorld_left_tarsus_src.h:
 
-/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
-
-include/AnalyticalKinematicsDynamics/kin/dR_right_toe_roll_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/dR_left_hip_pitch_src.h:
-
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
-include/Eigen/src/plugins/BlockMethods.h:
-
-include/Eigen/src/SparseLU/SparseLU_kernel_bmod.h:
-
-/usr/include/c++/7/bits/nested_exception.h:
-
 include/AnalyticalKinematicsDynamics/kin/dR_hip_flexion_left_src.h:
 
 include/Eigen/src/Core/util/StaticAssert.h:
@@ -3550,12 +3259,6 @@ include/AnalyticalKinematicsDynamics/kin/AMworld_about_pA_src.h:
 include/AnalyticalKinematicsDynamics/kin/dT_left_tarsus_src.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJp_elbow_joint_right_src.h:
-
-include/Eigen/src/Core/SolveTriangular.h:
-
-/usr/include/c++/7/vector:
 
 include/Eigen/Sparse:
 
@@ -3579,6 +3282,8 @@ include/AnalyticalKinematicsDynamics/kin/R_hip_rotation_left_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/AMWorld_left_toe_roll_src.h:
 
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
 include/AnalyticalKinematicsDynamics/kin/Js_left_toe_roll_src.h:
 
 /home/orl/anaconda3/include/OsqpEigen/Debug.hpp:
@@ -3599,15 +3304,35 @@ include/AnalyticalKinematicsDynamics/kin/T_right_tarsus_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/AMWorld_left_shoulder_roll_src.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_toe_pitch_src.h:
-
-/usr/include/x86_64-linux-gnu/bits/socket.h:
-
-libartl/artl.c:
-
 /usr/include/x86_64-linux-gnu/bits/stat.h:
 
+/usr/include/c++/7/bits/stl_heap.h:
+
+/home/orl/anaconda3/include/OsqpEigen/OsqpEigen.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jp_toe_pitch_joint_left_src.h:
+
+include/Eigen/src/Core/functors/AssignmentFunctors.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJp_elbow_joint_right_src.h:
+
+/usr/include/c++/7/vector:
+
+include/Eigen/src/Core/SolveTriangular.h:
+
+include/Eigen/src/LU/Determinant.h:
+
+/usr/include/c++/7/bits/alloc_traits.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/c++/7/bits/localefwd.h:
+
+/usr/include/c++/7/ios:
 
 /usr/include/asm-generic/errno.h:
 
@@ -3616,14 +3341,6 @@ include/AnalyticalKinematicsDynamics/kin/dJp_shoulder_roll_joint_left_src.h:
 include/AnalyticalKinematicsDynamics/kin/R_toe_pitch_joint_right_src.h:
 
 /usr/include/c++/7/cstdlib:
-
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJb_elbow_joint_left_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jb_BasePosZ_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_hip_yaw_src.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
@@ -3653,18 +3370,6 @@ include/AnalyticalKinematicsDynamics/kin/T_right_elbow_src.h:
 
 /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
 
-/usr/include/c++/7/sstream:
-
-include/AnalyticalKinematicsDynamics/kin/dJp_left_elbow_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJb_right_knee_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jb_left_elbow_src.h:
-
-/usr/include/c++/7/map:
-
-include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_hip_pitch_src.h:
-
 include/AnalyticalKinematicsDynamics/kin/dJp_left_hip_pitch_src.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
@@ -3673,9 +3378,31 @@ include/AnalyticalKinematicsDynamics/kin/dJp_left_hip_pitch_src.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
+include/AnalyticalKinematicsDynamics/kin/dJs_shoulder_pitch_joint_right_src.h:
+
+include/Eigen/LU:
+
+include/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
+
 include/Eigen/src/Core/arch/Default/Settings.h:
 
 include/AnalyticalKinematicsDynamics/kin/Inertia_right_shoulder_roll_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jq_AMWorld_right_hip_roll_src.h:
+
+/usr/include/c++/7/bits/memoryfwd.h:
+
+include/Eigen/Dense:
+
+include/AnalyticalKinematicsDynamics/kin/Jp_hip_rotation_left_src.h:
+
+/usr/include/stdc-predef.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_hip_yaw_src.h:
+
+/usr/include/c++/7/cassert:
+
+include/Eigen/src/SparseCore/SparseRef.h:
 
 /usr/include/c++/7/bits/char_traits.h:
 
@@ -3693,22 +3420,6 @@ include/Eigen/SparseCore:
 
 /usr/lib/gcc/x86_64-linux-gnu/7/include-fixed/syslimits.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jp_hip_rotation_left_src.h:
-
-/usr/include/stdc-predef.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_hip_yaw_src.h:
-
-/usr/include/c++/7/cassert:
-
-include/Eigen/src/SparseCore/SparseRef.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jq_AMWorld_right_hip_roll_src.h:
-
-/usr/include/c++/7/bits/memoryfwd.h:
-
-include/Eigen/Dense:
-
 include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_knee_src.h:
 
 /usr/include/c++/7/bits/cxxabi_forced.h:
@@ -3718,12 +3429,6 @@ include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_knee_src.h:
 include/AnalyticalKinematicsDynamics/kin/T_hip_rotation_left_src.h:
 
 include/Eigen/src/Core/products/SelfadjointMatrixMatrix.h:
-
-/usr/include/c++/7/type_traits:
-
-/usr/include/c++/7/bits/stringfwd.h:
-
-include/Eigen/src/Core/util/ReenableStupidWarnings.h:
 
 include/AnalyticalKinematicsDynamics/kin/T_LeftToeBottom_src.h:
 
@@ -3759,6 +3464,22 @@ include/AnalyticalKinematicsDynamics/kin/Js_BaseRotY_src.h:
 
 /usr/include/c++/7/bits/allocated_ptr.h:
 
+include/AnalyticalKinematicsDynamics/kin/dR_shin_to_tarsus_right_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJb_toe_pitch_joint_right_src.h:
+
+/usr/include/c++/7/bits/range_access.h:
+
+include/Eigen/SparseCholesky:
+
+src/kin_right_arm.cpp:
+
+include/AnalyticalKinematicsDynamics/kin/Jp_left_shoulder_pitch_src.h:
+
+include/Eigen/SVD:
+
+include/AnalyticalKinematicsDynamics/kin/AMBody_left_hip_yaw_src.h:
+
 /usr/include/c++/7/bits/exception.h:
 
 include/Eigen/src/Core/arch/CUDA/TypeCasting.h:
@@ -3768,12 +3489,6 @@ include/Eigen/src/Core/arch/CUDA/TypeCasting.h:
 /usr/include/c++/7/bits/uses_allocator.h:
 
 include/Eigen/src/Eigenvalues/RealQZ.h:
-
-include/AnalyticalKinematicsDynamics/kin/Js_left_shoulder_yaw_src.h:
-
-include/Eigen/src/Core/CwiseNullaryOp.h:
-
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
 include/AnalyticalKinematicsDynamics/kin/dR_BaseRotZ_src.h:
 
@@ -3795,25 +3510,7 @@ include/Eigen/src/Core/MathFunctionsImpl.h:
 
 /usr/include/c++/7/bits/cpp_type_traits.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-include/Eigen/src/Core/CwiseTernaryOp.h:
-
 include/AnalyticalKinematicsDynamics/kin/Jb_shoulder_roll_joint_right_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJp_toe_pitch_joint_left_src.h:
-
-/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
-
-/usr/include/c++/7/bits/algorithmfwd.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJs_shoulder_pitch_joint_right_src.h:
-
-include/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
-
-include/Eigen/LU:
-
-include/Eigen/src/Core/util/Macros.h:
 
 include/Eigen/src/plugins/MatrixCwiseUnaryOps.h:
 
@@ -3863,8 +3560,6 @@ include/AnalyticalKinematicsDynamics/kin/R_RightToeBottomBack_src.h:
 
 libartl/artl_internal.c:
 
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
 include/AnalyticalKinematicsDynamics/kin/dT_left_shoulder_roll_src.h:
 
 /usr/include/c++/7/bits/stl_vector.h:
@@ -3907,6 +3602,12 @@ include/AnalyticalKinematicsDynamics/kin/AMBody_right_toe_roll_src.h:
 
 /usr/include/c++/7/initializer_list:
 
+/usr/include/c++/7/bits/postypes.h:
+
+include/Eigen/src/SparseLU/SparseLU_relax_snode.h:
+
+include/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h:
+
 include/AnalyticalKinematicsDynamics/kin/T_knee_joint_right_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jb_hip_abduction_left_src.h:
@@ -3918,28 +3619,6 @@ include/AnalyticalKinematicsDynamics/kin/Js_toe_pitch_joint_left_src.h:
 include/AnalyticalKinematicsDynamics/kin/R_BasePosY_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/AMBody_left_hip_pitch_src.h:
-
-/usr/include/c++/7/bits/hash_bytes.h:
-
-/usr/include/c++/7/climits:
-
-/usr/include/c++/7/ext/string_conversions.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJp_shoulder_roll_joint_right_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/T_left_shoulder_roll_src.h:
-
-/usr/include/c++/7/istream:
-
-/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed/limits.h:
-
-/usr/include/c++/7/ext/atomicity.h:
-
-include/Eigen/src/Core/products/GeneralMatrixVector.h:
-
-include/AnalyticalKinematicsDynamics/kin/R_right_hip_pitch_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/AMBody_left_toe_pitch_src.h:
 
 /usr/include/c++/7/bits/functexcept.h:
 
@@ -4015,15 +3694,19 @@ include/AnalyticalKinematicsDynamics/kin/Js_left_knee_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jb_right_shoulder_roll_src.h:
 
-/usr/include/c++/7/ios:
-
 include/AnalyticalKinematicsDynamics/kin/dJp_hip_rotation_right_src.h:
 
 /usr/include/netinet/in.h:
 
 include/Eigen/src/SparseLU/SparseLU_heap_relax_snode.h:
 
-/usr/include/c++/7/bits/exception_defines.h:
+/usr/include/c++/7/bits/exception_ptr.h:
+
+src/kin_left_arm.cpp:
+
+include/AnalyticalKinematicsDynamics/kin/R_BasePosX_src.h:
+
+/usr/include/math.h:
 
 /usr/include/linux/ioctl.h:
 
@@ -4054,10 +3737,6 @@ include/AnalyticalKinematicsDynamics/kin/dJs_shoulder_pitch_joint_left_src.h:
 /usr/include/c++/7/array:
 
 /usr/include/x86_64-linux-gnu/c++/7/bits/messages_members.h:
-
-src/kin_left_arm.cpp:
-
-/usr/include/c++/7/bits/exception_ptr.h:
 
 /usr/include/x86_64-linux-gnu/c++/7/bits/c++config.h:
 
@@ -4097,6 +3776,68 @@ include/AnalyticalKinematicsDynamics/kin/p_right_knee_src.h:
 
 /usr/include/c++/7/stdlib.h:
 
+include/AnalyticalKinematicsDynamics/kin/dT_knee_joint_right_src.h:
+
+/usr/include/strings.h:
+
+/home/orl/anaconda3/include/OsqpEigen/Constants.hpp:
+
+include/AnalyticalKinematicsDynamics/kin/Jdq_AMWorld_right_hip_roll_src.h:
+
+include/Eigen/src/Core/products/GeneralBlockPanelKernel.h:
+
+include/Eigen/src/QR/HouseholderQR.h:
+
+include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
+
+/home/orl/anaconda3/include/osqp/types.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJs_RightToeBottomBack_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/AMWorld_right_elbow_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Inertia_left_shoulder_yaw_src.h:
+
+standing_control.cpp:
+
+/home/orl/anaconda3/include/osqp/glob_opts.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_toe_pitch_src.h:
+
+/usr/include/x86_64-linux-gnu/bits/socket.h:
+
+libartl/artl.c:
+
+/home/orl/anaconda3/include/osqp/osqp_configure.h:
+
+include/Eigen/src/IterativeLinearSolvers/SolveWithGuess.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+include/AnalyticalKinematicsDynamics/kin/dJb_elbow_joint_left_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jb_BasePosZ_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_hip_yaw_src.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_shoulder_yaw_src.h:
+
+/usr/include/c++/7/exception:
+
+include/AnalyticalKinematicsDynamics/kin/R_shoulder_pitch_joint_left_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Jq_AMWorld_left_toe_roll_src.h:
+
+/home/orl/anaconda3/include/osqp/util.h:
+
 include/Eigen/src/plugins/CommonCwiseUnaryOps.h:
 
 include/AnalyticalKinematicsDynamics/kin/Inertia_right_toe_roll_src.h:
@@ -4105,61 +3846,41 @@ include/AnalyticalKinematicsDynamics/kin/Inertia_right_toe_roll_src.h:
 
 include/Eigen/src/Core/util/DisableStupidWarnings.h:
 
-/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+include/Eigen/src/Core/Array.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jq_AMBody_right_shoulder_yaw_src.h:
-
-/usr/include/c++/7/exception:
-
-include/AnalyticalKinematicsDynamics/kin/R_BasePosX_src.h:
-
-/usr/include/math.h:
+include/Eigen/src/Core/CwiseTernaryOp.h:
 
 include/Eigen/src/Core/CwiseUnaryOp.h:
 
 /home/orl/anaconda3/include/osqp/auxil.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+include/AnalyticalKinematicsDynamics/kin/Js_left_shoulder_yaw_src.h:
 
-/usr/include/c++/7/typeinfo:
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
-/usr/include/c++/7/bits/localefwd.h:
+include/Eigen/src/Core/CwiseNullaryOp.h:
 
-include/AnalyticalKinematicsDynamics/kin/dT_toe_pitch_joint_right_src.h:
+include/AnalyticalKinematicsDynamics/kin/Jp_left_hip_pitch_src.h:
 
-include/AnalyticalKinematicsDynamics/kin/R_shoulder_yaw_joint_left_src.h:
+include/Eigen/src/Core/Redux.h:
 
-/usr/include/c++/7/algorithm:
+include/Eigen/src/Core/Dot.h:
 
-/usr/include/stdlib.h:
+include/Eigen/src/Core/StableNorm.h:
 
-include/AnalyticalKinematicsDynamics/kin/R_hip_abduction_right_src.h:
+include/Eigen/src/Core/Map.h:
 
-include/GeometricKinematics/rtwtypes.h:
+libartl/artl.h:
 
-include/AnalyticalKinematicsDynamics/kin/dT_hip_flexion_right_src.h:
+include/Eigen/src/Core/VectorBlock.h:
 
-include/AnalyticalKinematicsDynamics/kin/R_elbow_joint_left_src.h:
+include/Eigen/src/Core/DiagonalMatrix.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jp_hip_abduction_right_src.h:
-
-/usr/include/c++/7/iosfwd:
-
-include/AnalyticalKinematicsDynamics/kin/Jb_right_hip_roll_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJs_hip_rotation_right_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jdq_AMBody_left_tarsus_src.h:
-
-include/Eigen/src/SparseLU/SparseLU_relax_snode.h:
-
-include/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h:
-
-/usr/include/c++/7/bits/postypes.h:
-
-include/Eigen/src/OrderingMethods/Amd.h:
+include/Eigen/src/Core/ProductEvaluators.h:
 
 include/Eigen/src/Core/functors/NullaryFunctors.h:
+
+include/Eigen/src/OrderingMethods/Amd.h:
 
 include/Eigen/src/Core/Diagonal.h:
 
@@ -4189,23 +3910,11 @@ include/AnalyticalKinematicsDynamics/kin/AMWorld_left_toe_pitch_src.h:
 
 include/Eigen/src/Core/TriangularMatrix.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jdq_AMWorld_right_hip_roll_src.h:
-
-include/Eigen/src/Core/products/GeneralBlockPanelKernel.h:
-
-include/Eigen/src/QR/HouseholderQR.h:
-
-include/AnalyticalKinematicsDynamics/kin/dT_knee_joint_right_src.h:
-
-/usr/include/strings.h:
-
-/home/orl/anaconda3/include/OsqpEigen/Constants.hpp:
-
 include/Eigen/src/Core/products/Parallelizer.h:
 
-include/Eigen/src/Core/MapBase.h:
-
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+include/Eigen/src/Core/MapBase.h:
 
 include/Eigen/src/Geometry/Translation.h:
 
@@ -4219,9 +3928,9 @@ include/Eigen/src/Core/products/TriangularMatrixVector.h:
 
 include/AnalyticalKinematicsDynamics/kin/dJp_toe_roll_joint_left_src.h:
 
-include/Eigen/src/Core/CwiseBinaryOp.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+include/Eigen/src/Core/CwiseBinaryOp.h:
 
 include/Eigen/src/Core/products/TriangularMatrixMatrix.h:
 
@@ -4315,12 +4024,6 @@ include/Eigen/src/QR/FullPivHouseholderQR.h:
 
 include/AnalyticalKinematicsDynamics/kin/AMBody_right_shoulder_yaw_src.h:
 
-include/AnalyticalKinematicsDynamics/kin/Jp_left_shoulder_pitch_src.h:
-
-include/Eigen/SVD:
-
-include/AnalyticalKinematicsDynamics/kin/AMBody_left_hip_yaw_src.h:
-
 include/Eigen/src/misc/RealSvd2x2.h:
 
 include/Eigen/src/SVD/SVDBase.h:
@@ -4344,6 +4047,12 @@ include/Eigen/src/Geometry/Homogeneous.h:
 include/AnalyticalKinematicsDynamics/kin/dT_left_toe_roll_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/AMWorld_left_elbow_src.h:
+
+include/Eigen/src/Core/Ref.h:
+
+/home/orl/anaconda3/include/osqp/lin_alg.h:
+
+include/Eigen/src/Geometry/Rotation2D.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jp_BasePosX_src.h:
 
@@ -4393,45 +4102,9 @@ include/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
 
 include/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h:
 
-src/kin_right_arm.cpp:
-
-include/AnalyticalKinematicsDynamics/kin/dJs_RightToeBottomBack_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/AMWorld_right_elbow_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Inertia_left_shoulder_yaw_src.h:
-
-standing_control.cpp:
-
-/usr/include/c++/7/bits/stl_heap.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/home/orl/anaconda3/include/OsqpEigen/OsqpEigen.h:
-
-include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
-
-/home/orl/anaconda3/include/osqp/types.h:
-
-/home/orl/anaconda3/include/osqp/glob_opts.h:
-
-include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
-
 include/AnalyticalKinematicsDynamics/kin/Jb_LeftToeBottom_src.h:
 
-/home/orl/anaconda3/include/osqp/osqp_configure.h:
-
-include/AnalyticalKinematicsDynamics/kin/R_shoulder_pitch_joint_left_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Jq_AMWorld_left_toe_roll_src.h:
-
-/home/orl/anaconda3/include/osqp/util.h:
-
-include/Eigen/src/Core/Ref.h:
-
-include/Eigen/src/Geometry/Rotation2D.h:
-
-/home/orl/anaconda3/include/osqp/lin_alg.h:
+include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
 
 /home/orl/anaconda3/include/OsqpEigen/SparseMatrixHelper.hpp:
 

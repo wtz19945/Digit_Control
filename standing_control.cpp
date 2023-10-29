@@ -189,9 +189,12 @@ int main(int argc, char* argv[])
     pel_quaternion(3) = observation.base.orientation.z;
     
     theta = ToEulerAngle(pel_quaternion); // in roll, pitch, yaw order
+    MatrixXd OmegaToDtheta = MatrixXd::Zero(3,3);
+    OmegaToDtheta << 0 , -sin(theta(2)), cos(theta(2)) * cos(theta(1)), 0, cos(theta(2)), cos(theta(1)) * sin(theta(2)), 1, 0, -sin(theta(1));
+    dtheta = OmegaToDtheta * dtheta;
 
     // get state vector
-    wb_q  << pel_pos, 0, theta(1), theta(0), q(joint::left_hip_roll),q(joint::left_hip_yaw),q(joint::left_hip_pitch),q(joint::left_knee)
+    wb_q  << pel_pos, theta(2), theta(1), theta(0), q(joint::left_hip_roll),q(joint::left_hip_yaw),q(joint::left_hip_pitch),q(joint::left_knee)
       ,qj(joint::left_tarsus),qj(joint::left_toe_pitch),qj(joint::left_toe_roll),
       q(joint::right_hip_roll),q(joint::right_hip_yaw),q(joint::right_hip_pitch),q(joint::right_knee),
       qj(joint::right_tarsus),qj(joint::right_toe_pitch),qj(joint::right_toe_roll),q(joint::left_shoulder_roll),q(joint::left_shoulder_pitch)
@@ -210,7 +213,7 @@ int main(int argc, char* argv[])
       ,qj(joint::left_tarsus),qj(joint::left_toe_pitch),qj(joint::left_toe_roll),q(joint::right_hip_roll),q(joint::right_hip_yaw),q(joint::right_hip_pitch)
       ,q(joint::right_knee),qj(joint::right_tarsus),qj(joint::right_toe_pitch),qj(joint::right_toe_roll);
 
-    pb_dq << pel_vel, 0, dtheta(1), dtheta(0), dq(joint::left_hip_roll),dq(joint::left_hip_yaw),dq(joint::left_hip_pitch),dq(joint::left_knee)
+    pb_dq << pel_vel, dtheta(2), dtheta(1), dtheta(0), dq(joint::left_hip_roll),dq(joint::left_hip_yaw),dq(joint::left_hip_pitch),dq(joint::left_knee)
       ,dqj(joint::left_tarsus),dqj(joint::left_toe_pitch),dqj(joint::left_toe_roll),dq(joint::right_hip_roll),dq(joint::right_hip_yaw),dq(joint::right_hip_pitch)
       ,dq(joint::right_knee),dqj(joint::right_tarsus),dqj(joint::right_toe_pitch),dqj(joint::right_toe_roll);
       
@@ -275,7 +278,7 @@ int main(int argc, char* argv[])
     //right_toe_pos_ref(2) = -0.7;
 
     // Toe weights and Gains
-    MatrixXd Weight_ToeF = 5050*MatrixXd::Identity(6,6);
+    MatrixXd Weight_ToeF = 1050*MatrixXd::Identity(6,6);
     VectorXd KP_ToeF = VectorXd::Zero(6,1);
     VectorXd KD_ToeF = VectorXd::Zero(6,1);
     KP_ToeF << 225,225,225,225,225,225;
@@ -292,7 +295,7 @@ int main(int argc, char* argv[])
 
 
     // Control another contact point on toe back to enable foot rotation control
-    MatrixXd Weight_ToeB = 5050*MatrixXd::Identity(8,8);
+    MatrixXd Weight_ToeB = 1050*MatrixXd::Identity(8,8);
     VectorXd KP_ToeB = KP_ToeF;
     VectorXd KD_ToeB = KD_ToeF;
 
@@ -354,11 +357,11 @@ int main(int argc, char* argv[])
     VectorXd KP_pel = VectorXd::Zero(6,1);
     VectorXd KD_pel = VectorXd::Zero(6,1);
     KP_pel << 20,20,50,50,50,50;
-    KD_pel << 2,2,5,10,10,10;
+    KD_pel << 5,5,5,2,2,2;
 
     MatrixXd pel_jaco = MatrixXd::Zero(6,20);
     pel_jaco.block(0,0,6,6) = MatrixXd::Identity(6,6);
-    des_acc_pel << -KP_pel(0) * (pel_pos(0) - 0.05) - KD_pel(0) * (pel_vel(0) - 0),
+    des_acc_pel << -KP_pel(0) * (pel_pos(0) - 0.0) - KD_pel(0) * (pel_vel(0) - 0),
                    -KP_pel(1) * (pel_pos(1) - 0) - KD_pel(1) * (pel_vel(1) - 0),
                    -KP_pel(2) * (pel_pos(2) - 1) - KD_pel(2) * (pel_vel(2) - 0),
                    -KP_pel(3) * (theta(2) - 0) - KD_pel(3) * (dtheta(2) - 0),
@@ -366,7 +369,7 @@ int main(int argc, char* argv[])
                    -KP_pel(5) * (theta(0) - 0) - KD_pel(5) * (dtheta(0) - 0);
 
     MatrixXd Weight_pel = 150 * MatrixXd::Identity(6,6);
-    Weight_pel(2,2) = 750; // height control should dominate
+    Weight_pel(2,2) = 150; // height control should dominate
     // Solve OSC QP
     int Vars_Num = 20 + 12 + 4 + 12;
     int Cons_Num = 20 + 4 + Vars_Num;
@@ -409,12 +412,12 @@ int main(int argc, char* argv[])
     u_limit  << 116.682, 70.1765, 206.928,220.928,35.9759,35.9759,116.682, 70.1765, 206.928,220.928,35.9759,35.9759;
     tor_limit<< OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY;
     for(int i=0;i<12;i++){
-      f_limit(i) = 150;
+      f_limit(i) = 240;
     }
-    f_limit(2) = 300;
-    f_limit(5) = 300;
-    f_limit(8) = 300;
-    f_limit(11) = 300;
+    f_limit(2) = 400;
+    f_limit(5) = 400;
+    f_limit(8) = 400;
+    f_limit(11) = 400;
     // Incorporate damping command into OSC
     VectorXd damping(20),D_term(20);;
     damping << VectorXd::Zero(6,1), 66.849, 26.1129, 38.05, 38.05, 0 , 15.5532, 15.5532, 
@@ -446,19 +449,7 @@ int main(int argc, char* argv[])
     // Works like reflected inertia. Otherwise, need to have large P gains. But is is modeled in the mujoco sim?
     // Important Question??? seems not helping in standing phase. Maybe it is because the cross terms are not considered in
     // the fixed base controller
-    M(6,6) += 1.09;
-    M(7,7) += 1.09;
-    M(8,8) += 1.09;
-    M(9,9) += 1.09;
-    M(13,13) += 1.09;
-    M(14,14) += 1.09;
-    M(15,15) += 1.09;
-    M(16,16) += 1.09;
 
-    M(11,11) += 0.39;
-    M(12,12) += 0.39;
-    M(18,18) += 0.39;
-    M(19,19) += 0.39;
 
     // Constraint Matrix
     MatrixXd constraint_full = MatrixXd::Zero(Cons_Num,Vars_Num);
@@ -503,10 +494,7 @@ int main(int argc, char* argv[])
       torque(i) = QPSolution(20+i);
 
     // OSC on leg, PD on arm
-    soft_start++;
-    if(soft_start>1000){
-      soft_start = 0;
-    }
+
 
     // Integrate osc ddq to find velocity command
     VectorXd wb_dq_next = VectorXd::Zero(12,1);
@@ -532,14 +520,24 @@ int main(int argc, char* argv[])
     VectorXd p_rh_ref = VectorXd::Zero(3,1);
     VectorXd p_rh_err = VectorXd::Zero(3,1);
 
-    if(soft_start<500){
-      p_lh_ref << 0.4, 0.2 - .1 * cos(soft_start/500*3.14),1.6 - .1 * sin(soft_start/500*3.14);
-      p_rh_ref << 0.4,-0.2 + .1 * cos(soft_start/500*3.14),1.6 - .1 * sin(soft_start/500*3.14);
+    int period = 500;
+    soft_start++;
+    if(soft_start>period){
+      soft_start = 0;
+    }
+
+
+    if(soft_start<period/2){
+      p_lh_ref << 0.2, 0.2 - .1 * cos(soft_start/period*2*3.14),1.3 - .1 * sin(soft_start/period*2*3.14);
+      p_rh_ref << 0.2,-0.2 + .1 * cos(soft_start/period*2*3.14),1.3 - .1 * sin(soft_start/period*2*3.14);
     }
     else{
-      p_lh_ref << 0.4, 0.2 - .1 * cos(soft_start/500*3.14),1.6 + .1 * sin(soft_start/500*3.14);
-      p_rh_ref << 0.4,-0.2 + .1 * cos(soft_start/500*3.14),1.6 + .1 * sin(soft_start/500*3.14);
+      p_lh_ref << 0.2, 0.2 - .1 * cos(soft_start/period*2*3.14),1.3 + .1 * sin(soft_start/period*2*3.14);
+      p_rh_ref << 0.2,-0.2 + .1 * cos(soft_start/period*2*3.14),1.3 + .1 * sin(soft_start/period*2*3.14);
     }
+
+    //p_lh_ref << 0.2 , 0.2, 1.3;
+    //p_rh_ref << 0.2 , -0.2, 1.3;
     // initial q
     for(int i = 0;i<6;i++){
       ql(i) = wb_q(i);
@@ -557,16 +555,24 @@ int main(int argc, char* argv[])
     kin_right_arm(qr.data(),p_rh.data(), J_rh.data());
     J_lh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
     J_rh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
+
     // left arm IK
     double error;
     error = (p_lh - p_lh_ref).norm();
-    while(error >0.01){
+    double iter = 0;
+    while(error >0.01 && iter<5){
       ql += J_lh.colPivHouseholderQr().solve(p_lh_ref - p_lh);
       // Evaluate new pos
       kin_left_arm(ql.data(),p_lh.data(), J_lh.data());
       J_lh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
+      
       error = (p_lh - p_lh_ref).norm();
+      iter++;
     }
+    
+    cout << "arm goal" << endl << p_lh << endl;
+    cout << "ql" << endl << ql << endl;
+    cout << "current" << wb_q.block(20,0,4,1) << endl;
     target_position[12] = ql(6);
     target_position[13] = ql(7);
     target_position[14] = ql(8);
@@ -574,12 +580,14 @@ int main(int argc, char* argv[])
 
     // right arm IK
     error = (p_rh - p_rh_ref).norm();
-    while(error >0.01){
+    iter = 0;
+    while(error >0.01 && iter<5){
       qr += J_rh.colPivHouseholderQr().solve(p_rh_ref - p_rh);
       // Evaluate new pos
       kin_right_arm(qr.data(),p_rh.data(), J_rh.data());
       J_rh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
       error = (p_rh - p_rh_ref).norm();
+      iter++;
     }
     target_position[16] = qr(6);
     target_position[17] = qr(7);
