@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # A Digit standing controller implementation
 
 ## Note
@@ -30,3 +31,5 @@ To compile the code, run:
 When the operation mode is set to low-level-api, you should see optimization status from the terminal and digit starts moving.
 
 Note that you need to modify the directories depending on where you store the files.
+=======
+>>>>>>> Stashed changes
