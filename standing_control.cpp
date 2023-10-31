@@ -26,8 +26,10 @@
 #include <unistd.h>
 #include "OsqpEigen/OsqpEigen.h"
 #include <Eigen/Dense>
+#include <Eigen/Core>
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 #include "analytical_expressions.hpp"
 #include "kin_left_arm.hpp"
 #include "kin_right_arm.hpp"
@@ -115,10 +117,15 @@ static double target_position[] = {
   -0.3633,//right arm
 };
 
+
 MatrixXd get_B(VectorXd q);
 MatrixXd get_Spring_Jaco();
 VectorXd ToEulerAngle(VectorXd q);
 MatrixXd get_fric_constraint(double mu);
+double deg2rad(double deg) {
+    return deg * M_PI / 180.0;
+}
+
 #define NUM_FROST_STATE 28
 #define NUM_Dyn_STATE 20
 using namespace std;
@@ -157,7 +164,7 @@ int main(int argc, char* argv[])
   // Get local copy of command limits (torque and damping)
   const llapi_limits_t* limits = llapi_get_limits();
   
-  // Load Gains
+  // Load Gains from TOML file
   std::shared_ptr<cpptoml::table> config = cpptoml::parse_file("/home/orl/Tianze_WS/Test_Control/src/config_file/osc_robot_config.toml");
   double cpx = config->get_qualified_as<double>("PD-Gains.com_P_gain_x").value_or(0);
   double cpy = config->get_qualified_as<double>("PD-Gains.com_P_gain_y").value_or(0);
@@ -187,6 +194,7 @@ int main(int argc, char* argv[])
   double force_max = config->get_qualified_as<double>("QP-Params.force_max").value_or(0);
   double mu = config->get_qualified_as<double>("QP-Params.mu").value_or(0);
 
+  double arm_P = config->get_qualified_as<double>("PD-Gains.arm_P").value_or(0);
   MatrixXd Weight_ToeF = Wff*MatrixXd::Identity(6,6);
   VectorXd KP_ToeF = VectorXd::Zero(6,1);
   VectorXd KD_ToeF = VectorXd::Zero(6,1);
@@ -376,7 +384,7 @@ int main(int argc, char* argv[])
                    -KP_ToeB(5) * (right_toe_rot(2) - right_toe_pos_ref(2)) - KD_ToeB(5) * (right_toe_drot(2) - right_toe_vel_ref(2)) + right_toe_acc_ref(2),
                    -KP_ToeB(5) * (right_toe_rot(3) - 0) - KD_ToeB(5) * (right_toe_drot(3) - 0);
     
-    // Compute JdotV
+    // Compute JdotV. TODO: check if this is needed for control
     des_acc = VectorXd::Zero(6,1);
     des_acc_toe.block(0,0,3,1) = VectorXd::Zero(3,1); // for stance foot, desired acc is 0
     des_acc_toe.block(4,0,3,1) = VectorXd::Zero(3,1);
@@ -395,9 +403,6 @@ int main(int argc, char* argv[])
 
     // For pelvis control in standing OSC
     VectorXd des_acc_pel = VectorXd::Zero(6,1);
-    VectorXd des_acc_stf = VectorXd::Zero(6,1);
-
-
     MatrixXd pel_jaco = MatrixXd::Zero(6,20);
     pel_jaco.block(0,0,6,6) = MatrixXd::Identity(6,6);
     des_acc_pel << -KP_pel(0) * (pel_pos(0) - 0.0) - KD_pel(0) * (pel_vel(0) - 0),
@@ -577,51 +582,46 @@ int main(int argc, char* argv[])
       soft_start = 0;
     }
 
-
     if(soft_start<period/2){
-      p_lh_ref << 0.2, 0.2 - .1 * cos(soft_start/period*2*3.14),1.3 - .1 * sin(soft_start/period*2*3.14);
-      p_rh_ref << 0.2,-0.2 + .1 * cos(soft_start/period*2*3.14),1.3 - .1 * sin(soft_start/period*2*3.14);
+      p_lh_ref << 0.2, 0.2 - .1 * cos(soft_start/period*2*3.14),1.3 - .2 * sin(soft_start/period*2*3.14);
+      p_rh_ref << 0.2,-0.2 + .1 * cos(soft_start/period*2*3.14),1.3 - .2 * sin(soft_start/period*2*3.14);
     }
     else{
-      p_lh_ref << 0.2, 0.2 - .1 * cos(soft_start/period*2*3.14),1.3 + .1 * sin(soft_start/period*2*3.14);
-      p_rh_ref << 0.2,-0.2 + .1 * cos(soft_start/period*2*3.14),1.3 + .1 * sin(soft_start/period*2*3.14);
+      p_lh_ref << 0.2, 0.2 - .1 * cos(soft_start/period*2*3.14),1.3 + .2 * sin(soft_start/period*2*3.14);
+      p_rh_ref << 0.2,-0.2 + .1 * cos(soft_start/period*2*3.14),1.3 + .2 * sin(soft_start/period*2*3.14);
     }
 
-    //p_lh_ref << 0.2 , 0.2, 1.3;
-    //p_rh_ref << 0.2 , -0.2, 1.3;
     // initial q
     for(int i = 0;i<6;i++){
       ql(i) = wb_q(i);
       qr(i) = wb_q(i);
     }
-    ql(6) = wb_q(20);
-    ql(7) = wb_q(21);
-    ql(8) = wb_q(22);
-    ql(9) = wb_q(23);
-    qr(6) = wb_q(24);
-    qr(7) = wb_q(25);
-    qr(8) = wb_q(26);
-    qr(9) = wb_q(27);
+    ql.block(6,0,4,1) = wb_q.block(20,0,4,1);
+    qr.block(6,0,4,1) = wb_q.block(24,0,4,1);
     kin_left_arm(ql.data(),p_lh.data(), J_lh.data());
     kin_right_arm(qr.data(),p_rh.data(), J_rh.data());
-    J_lh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
-    J_rh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
+    J_lh.block(0,0,3,7) = MatrixXd::Zero(3,7); // base is fixed for arm IK
+    J_rh.block(0,0,3,7) = MatrixXd::Zero(3,7); // base is fixed for arm IK
 
     // left arm IK
     double error;
     error = (p_lh - p_lh_ref).norm();
     double iter = 0;
     while(error >0.01 && iter<5){
+      // solve for new joint
       ql += J_lh.colPivHouseholderQr().solve(p_lh_ref - p_lh);
+      // Clip joints
+      //ql(6) = max(min(ql(6),deg2rad(75)),deg2rad(-75));
+      ql(6) = -0.3;
+      ql(7) = max(min(ql(7),deg2rad(145)),deg2rad(-145));
+      ql(8) = max(min(ql(8),deg2rad(100)),deg2rad(-100));
+      ql(9) = max(min(ql(9),deg2rad(77.5)),deg2rad(-77.5));
       // Evaluate new pos
       kin_left_arm(ql.data(),p_lh.data(), J_lh.data());
-      J_lh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
-      
+      J_lh.block(0,0,3,7) = MatrixXd::Zero(3,7); // base is fixed for arm IK
       error = (p_lh - p_lh_ref).norm();
       iter++;
     }
-    
-
     target_position[12] = ql(6);
     target_position[13] = ql(7);
     target_position[14] = ql(8);
@@ -632,9 +632,15 @@ int main(int argc, char* argv[])
     iter = 0;
     while(error >0.01 && iter<5){
       qr += J_rh.colPivHouseholderQr().solve(p_rh_ref - p_rh);
+      // Clip joints
+      //qr(6) = max(min(qr(6),deg2rad(75)),deg2rad(-75));
+      qr(6) = 0.3;
+      qr(7) = max(min(qr(7),deg2rad(145)),deg2rad(-145));
+      qr(8) = max(min(qr(8),deg2rad(100)),deg2rad(-100));
+      qr(9) = max(min(qr(9),deg2rad(77.5)),deg2rad(-77.5));
       // Evaluate new pos
       kin_right_arm(qr.data(),p_rh.data(), J_rh.data());
-      J_rh.block(0,0,3,6) = MatrixXd::Zero(3,6); // base is fixed for arm IK
+      J_rh.block(0,0,3,7) = MatrixXd::Zero(3,7); // base is fixed for arm IK
       error = (p_rh - p_rh_ref).norm();
       iter++;
     }
@@ -656,8 +662,8 @@ int main(int argc, char* argv[])
     for (int i = 0; i < NUM_MOTORS; ++i) {
       if(i>=12){
         command.motors[i].torque =
-          150.0 * (target_position[i] - observation.motor.position[i]);
-          command.motors[i].velocity = 0.0;
+          arm_P * (target_position[i] - observation.motor.position[i]);
+          command.motors[i].velocity = 0;
           command.motors[i].damping = 0.75 * limits->damping_limit[i];
       }
       else{

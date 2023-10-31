@@ -467,6 +467,7 @@ CMakeFiles/standing_control.dir/standing_control.cpp.o: \
  /home/orl/anaconda3/include/osqp/auxil.h \
  /home/orl/anaconda3/include/osqp/scaling.h \
  /home/orl/anaconda3/include/OsqpEigen/Debug.hpp \
+ /home/orl/Tianze_WS/Test_Control/include/Eigen/Core \
  /usr/include/c++/7/iomanip /usr/include/c++/7/locale \
  /usr/include/c++/7/bits/locale_facets_nonio.h /usr/include/c++/7/ctime \
  /usr/include/x86_64-linux-gnu/c++/7/bits/time_members.h \
