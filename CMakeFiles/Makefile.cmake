@@ -58,6 +58,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/standing_controlV2.dir/DependInfo.cmake"
   "CMakeFiles/cmake_hello.dir/DependInfo.cmake"
   "CMakeFiles/standing_control.dir/DependInfo.cmake"
   "include/GeometricKinematics/CMakeFiles/GeometricKinematicsTest.dir/DependInfo.cmake"

@@ -1,0 +1,15 @@
+Thu Nov  2 15:37:31 2023
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Thu Nov  2 15:39:22 2023
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Thu Nov  2 15:45:30 2023
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Thu Nov  2 15:57:22 2023
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Thu Nov  2 19:25:17 2023
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+

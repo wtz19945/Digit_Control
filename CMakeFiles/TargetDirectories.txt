@@ -1,5 +1,6 @@
 /home/orl/Tianze_WS/Test_Control/CMakeFiles/rebuild_cache.dir
 /home/orl/Tianze_WS/Test_Control/CMakeFiles/edit_cache.dir
+/home/orl/Tianze_WS/Test_Control/CMakeFiles/standing_controlV2.dir
 /home/orl/Tianze_WS/Test_Control/CMakeFiles/cmake_hello.dir
 /home/orl/Tianze_WS/Test_Control/CMakeFiles/standing_control.dir
 /home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/CMakeFiles/edit_cache.dir
