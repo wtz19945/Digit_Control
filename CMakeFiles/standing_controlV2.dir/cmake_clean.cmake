@@ -13,8 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/standing_controlV2.dir/src/kin_left_arm.cpp.o.d"
   "CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o"
   "CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o.d"
-  "CMakeFiles/standing_controlV2.dir/standing_control.cpp.o"
-  "CMakeFiles/standing_controlV2.dir/standing_control.cpp.o.d"
+  "CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o"
+  "CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o.d"
   "standing_controlV2"
   "standing_controlV2.pdb"
 )

@@ -69,19 +69,19 @@ include CMakeFiles/standing_controlV2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/standing_controlV2.dir/flags.make
 
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.o: CMakeFiles/standing_controlV2.dir/flags.make
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.o: standing_control.cpp
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.o: CMakeFiles/standing_controlV2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orl/Tianze_WS/Test_Control/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/standing_controlV2.dir/standing_control.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/standing_controlV2.dir/standing_control.cpp.o -MF CMakeFiles/standing_controlV2.dir/standing_control.cpp.o.d -o CMakeFiles/standing_controlV2.dir/standing_control.cpp.o -c /home/orl/Tianze_WS/Test_Control/standing_control.cpp
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: CMakeFiles/standing_controlV2.dir/flags.make
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.cpp
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: CMakeFiles/standing_controlV2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orl/Tianze_WS/Test_Control/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o -MF CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o.d -o CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o -c /home/orl/Tianze_WS/Test_Control/standing_controlV2.cpp
 
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/standing_controlV2.dir/standing_control.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orl/Tianze_WS/Test_Control/standing_control.cpp > CMakeFiles/standing_controlV2.dir/standing_control.cpp.i
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orl/Tianze_WS/Test_Control/standing_controlV2.cpp > CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.i
 
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/standing_controlV2.dir/standing_control.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orl/Tianze_WS/Test_Control/standing_control.cpp -o CMakeFiles/standing_controlV2.dir/standing_control.cpp.s
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orl/Tianze_WS/Test_Control/standing_controlV2.cpp -o CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.s
 
 CMakeFiles/standing_controlV2.dir/lowlevelapi.c.o: CMakeFiles/standing_controlV2.dir/flags.make
 CMakeFiles/standing_controlV2.dir/lowlevelapi.c.o: lowlevelapi.c
@@ -183,7 +183,7 @@ CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.s: cmake_force
 
 # Object files for target standing_controlV2
 standing_controlV2_OBJECTS = \
-"CMakeFiles/standing_controlV2.dir/standing_control.cpp.o" \
+"CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o" \
 "CMakeFiles/standing_controlV2.dir/lowlevelapi.c.o" \
 "CMakeFiles/standing_controlV2.dir/libartl/artl.c.o" \
 "CMakeFiles/standing_controlV2.dir/libartl/artl_internal.c.o" \
@@ -195,7 +195,7 @@ standing_controlV2_OBJECTS = \
 # External object files for target standing_controlV2
 standing_controlV2_EXTERNAL_OBJECTS =
 
-standing_controlV2: CMakeFiles/standing_controlV2.dir/standing_control.cpp.o
+standing_controlV2: CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o
 standing_controlV2: CMakeFiles/standing_controlV2.dir/lowlevelapi.c.o
 standing_controlV2: CMakeFiles/standing_controlV2.dir/libartl/artl.c.o
 standing_controlV2: CMakeFiles/standing_controlV2.dir/libartl/artl_internal.c.o

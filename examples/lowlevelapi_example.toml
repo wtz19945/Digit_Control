@@ -12,4 +12,9 @@ send-port = 25501
 
 [simulator]
 # Uncomment this for better visualization, but it will cause some state estimate features to be disabled (e.g. foot contact reporting)
-# perfect-state = true
+#perfect-state = true
+
+[[model-list]]
+model = "robot"
+pose = {rpyxyz = [0, 0, -3.14, 0, 0, 1]}
+

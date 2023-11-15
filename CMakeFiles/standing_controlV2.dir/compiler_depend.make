@@ -492,7 +492,7 @@ CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o: src/kin_right_arm.cpp
   /usr/include/string.h \
   /usr/include/strings.h
 
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.o: standing_control.cpp \
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.cpp \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -2913,6 +2913,12 @@ include/Eigen/src/Householder/HouseholderSequence.h:
 
 /usr/include/locale.h:
 
+include/AnalyticalKinematicsDynamics/kin/dJs_RightToeBottomBack_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/AMWorld_right_elbow_src.h:
+
+include/AnalyticalKinematicsDynamics/kin/Inertia_left_shoulder_yaw_src.h:
+
 /usr/include/x86_64-linux-gnu/c++/7/bits/c++locale.h:
 
 include/AnalyticalKinematicsDynamics/kin/dR_hip_abduction_right_src.h:
@@ -3124,6 +3130,10 @@ include/AnalyticalKinematicsDynamics/kin/dR_elbow_joint_left_src.h:
 include/Eigen/src/Core/NestByValue.h:
 
 include/MathExpr/math2mat.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/include/linux/errno.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jb_shoulder_yaw_joint_left_src.h:
 
@@ -3839,18 +3849,6 @@ include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
 
 /home/orl/anaconda3/include/osqp/types.h:
 
-/usr/include/linux/errno.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
-
-include/AnalyticalKinematicsDynamics/kin/dJs_RightToeBottomBack_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/AMWorld_right_elbow_src.h:
-
-include/AnalyticalKinematicsDynamics/kin/Inertia_left_shoulder_yaw_src.h:
-
-standing_control.cpp:
-
 /home/orl/anaconda3/include/osqp/glob_opts.h:
 
 /usr/include/c++/7/bits/parse_numbers.h:
@@ -4070,6 +4068,8 @@ include/Eigen/src/SVD/SVDBase.h:
 /usr/include/c++/7/bits/concept_check.h:
 
 include/AnalyticalKinematicsDynamics/kin/Jb_left_hip_roll_src.h:
+
+standing_controlV2.cpp:
 
 include/Eigen/QR:
 

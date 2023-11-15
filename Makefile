@@ -453,7 +453,6 @@ standing_control.o: standing_control.cpp.o
 
 # target to build an object file
 standing_control.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_controlV2.dir/build.make CMakeFiles/standing_controlV2.dir/standing_control.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_control.dir/build.make CMakeFiles/standing_control.dir/standing_control.cpp.o
 .PHONY : standing_control.cpp.o
 
@@ -462,7 +461,6 @@ standing_control.i: standing_control.cpp.i
 
 # target to preprocess a source file
 standing_control.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_controlV2.dir/build.make CMakeFiles/standing_controlV2.dir/standing_control.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_control.dir/build.make CMakeFiles/standing_control.dir/standing_control.cpp.i
 .PHONY : standing_control.cpp.i
 
@@ -471,9 +469,32 @@ standing_control.s: standing_control.cpp.s
 
 # target to generate assembly for a file
 standing_control.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_controlV2.dir/build.make CMakeFiles/standing_controlV2.dir/standing_control.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_control.dir/build.make CMakeFiles/standing_control.dir/standing_control.cpp.s
 .PHONY : standing_control.cpp.s
+
+standing_controlV2.o: standing_controlV2.cpp.o
+.PHONY : standing_controlV2.o
+
+# target to build an object file
+standing_controlV2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_controlV2.dir/build.make CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o
+.PHONY : standing_controlV2.cpp.o
+
+standing_controlV2.i: standing_controlV2.cpp.i
+.PHONY : standing_controlV2.i
+
+# target to preprocess a source file
+standing_controlV2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_controlV2.dir/build.make CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.i
+.PHONY : standing_controlV2.cpp.i
+
+standing_controlV2.s: standing_controlV2.cpp.s
+.PHONY : standing_controlV2.s
+
+# target to generate assembly for a file
+standing_controlV2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/standing_controlV2.dir/build.make CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.s
+.PHONY : standing_controlV2.cpp.s
 
 # Help Target
 help:
@@ -518,6 +539,9 @@ help:
 	@echo "... standing_control.o"
 	@echo "... standing_control.i"
 	@echo "... standing_control.s"
+	@echo "... standing_controlV2.o"
+	@echo "... standing_controlV2.i"
+	@echo "... standing_controlV2.s"
 .PHONY : help
 
 

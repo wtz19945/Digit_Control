@@ -499,8 +499,8 @@ CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o
  /usr/include/string.h
  /usr/include/strings.h
 
-CMakeFiles/standing_controlV2.dir/standing_control.cpp.o
- /home/orl/Tianze_WS/Test_Control/standing_control.cpp
+CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o
+ /home/orl/Tianze_WS/Test_Control/standing_controlV2.cpp
  /usr/include/stdc-predef.h
  /usr/include/stdio.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h

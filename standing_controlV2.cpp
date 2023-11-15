@@ -93,7 +93,7 @@ static double target_position[] = {
   -0.485182,
   0.2371617,//right foot
   -0.3,
-  -0.943845,
+  0.943845,
   0.0,
   0.3633,//left arm
   0.3,
@@ -221,12 +221,12 @@ int main(int argc, char* argv[])
   tor_limit<< OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY,  OsqpEigen::INFTY;
 
   // Incorporate damping command into OSC
-  double damping_dt = 0.001;
+  double damping_dt = 0.00;
   VectorXd damping(20),D_term(20);;
   damping << VectorXd::Zero(6,1), 66.849, 26.1129, 38.05, 38.05, 0 , 15.5532, 15.5532, 
               66.849, 26.1129, 38.05, 38.05, 0 , 15.5532, 15.5532;
   MatrixXd Dmat = damping.asDiagonal();
-  D_term = 0.75 * Dmat * wb_dq.block(0,0,20,1);
+  D_term = 0.0 * Dmat * wb_dq.block(0,0,20,1);
 
   //
   int Vars_Num = 20 + 12 + 4 + 12 + 14;
@@ -236,10 +236,24 @@ int main(int argc, char* argv[])
   Eigen::SparseMatrix<double> linearMatrix;
   linearMatrix.resize(Cons_Num,Vars_Num);
   std::vector<Eigen::Triplet<double>> coefficients;            // list of non-zeros coefficients 
-  VectorXd counter = VectorXd::Zero(3,1);
+  VectorXd counter = VectorXd::Zero(4,1);
+
+  auto time_control_start = std::chrono::system_clock::now();
+  double digit_time_start = observation.time;
+
+  // initialize desired orientation
+  double yaw_des = 0;
+  double pel_x = 0;
+  double pel_y = 0;
 
   while (1) {
+    
+    // count running time
+    auto elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_control_start);
+    cout << "run time of the robot is: " << observation.time - digit_time_start << endl;
+    cout << "run time of the controller is: " << elapsed_time.count() << endl;
     auto time_program_start = std::chrono::system_clock::now();
+
     // Update observation
     int return_val = llapi_get_observation(&observation);
     if (return_val < 1) {
@@ -276,6 +290,33 @@ int main(int argc, char* argv[])
     MatrixXd OmegaToDtheta = MatrixXd::Zero(3,3);
     OmegaToDtheta << 0 , -sin(theta(2)), cos(theta(2)) * cos(theta(1)), 0, cos(theta(2)), cos(theta(1)) * sin(theta(2)), 1, 0, -sin(theta(1));
     dtheta = OmegaToDtheta * dtheta;
+
+    // Wrap yaw orientation so the desired yaw is always 0
+    if(elapsed_time.count() < 10000){
+        yaw_des = theta(2);
+        pel_x = pel_pos(0);
+        pel_y = pel_pos(1);
+    }
+
+    pel_pos(0) -= pel_x;
+    pel_pos(1) -= pel_y;
+
+    theta(2) -= yaw_des;
+    if(theta(2) > M_PI){
+        theta(2) = theta(2) + yaw_des - 2 * M_PI; 
+    }
+    else if(theta(2) < -M_PI){
+        theta(2) = theta(2) + yaw_des;
+    }
+    else{
+      //;
+    }
+    cout << "current theta: " << theta(2) << endl << yaw_des << endl;
+    cout << theta << endl;
+    cout << pel_pos << endl;
+    cout << dtheta << endl;
+    cout << pel_vel << endl;
+
 
     // get state vector
     wb_q  << pel_pos, theta(2), theta(1), theta(0), q(joint::left_hip_roll),q(joint::left_hip_yaw),q(joint::left_hip_pitch),q(joint::left_knee)
@@ -326,7 +367,7 @@ int main(int argc, char* argv[])
     MatrixXd right_toe_back_jaco  = analytical_expressions.Jp_right_toe_back(wb_q);
     //MatrixXd right_toe_back_djaco  = analytical_expressions.dJp_right_toe_back(wb_q,wb_dq);
 
-    auto elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
+    elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
     cout << "time used to compute system dyn and kin is: " << elapsed_time.count() << endl;
 
     // Get fixed arm version
@@ -434,8 +475,8 @@ int main(int argc, char* argv[])
     VectorXd des_acc_pel = VectorXd::Zero(6,1);
     MatrixXd pel_jaco = MatrixXd::Zero(6,20);
     pel_jaco.block(0,0,6,6) = MatrixXd::Identity(6,6);
-    des_acc_pel << -KP_pel(0) * (pel_pos(0) - 0.05) - KD_pel(0) * (pel_vel(0) - 0),
-                   -KP_pel(1) * (pel_pos(1) - 0) - KD_pel(1) * (pel_vel(1) - 0),
+    des_acc_pel << -KP_pel(0) * (pel_pos(0) - 0.0) - KD_pel(0) * (pel_vel(0) - 0),
+                   -KP_pel(1) * (pel_pos(1) - 0.0) - KD_pel(1) * (pel_vel(1) - 0),
                    -KP_pel(2) * (pel_pos(2) - 1) - KD_pel(2) * (pel_vel(2) - 0),
                    -KP_pel(3) * (theta(2) - 0) - KD_pel(3) * (dtheta(2) - 0),
                    -KP_pel(4) * (theta(1) - 0) - KD_pel(4) * (dtheta(1) - 0),
@@ -522,6 +563,7 @@ int main(int argc, char* argv[])
     // Works like reflected inertia. Otherwise, need to have large P gains. But is is modeled in the mujoco sim?
     // Important Question??? seems not helping in standing phase. Maybe it is because the cross terms are not considered in
     // the fixed base controller
+
 
     // Constraint Matrix
     if(QP_initialized == 0){
@@ -615,10 +657,6 @@ int main(int argc, char* argv[])
     elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
     cout << "set up sparse constraint: " << elapsed_time.count() << endl;
     if(QP_initialized == 0){
-      solver.settings() ->setPrimalInfeasibilityTolerance(1e-4);
-      solver.settings() ->setCheckTermination(10);
-      solver.settings() ->setAbsoluteTolerance(1e-4);
-      solver.settings() ->setRelativeTolerance(1e-4);
       solver.data()->setHessianMatrix(hessian);
       solver.data()->setGradient(gradient);
       solver.data()->setLinearConstraintsMatrix(linearMatrix);
@@ -641,6 +679,8 @@ int main(int argc, char* argv[])
     for(int i = 0;i<12;i++)
       torque(i) = QPSolution(20+i);
 
+    cout << "result acc*****" << endl;
+    cout << torque << endl;
     // OSC on leg, PD on arm
     elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
     cout << "time used to compute system dyn and kin + QP formulation + Solving: " << elapsed_time.count() << endl;
@@ -650,6 +690,10 @@ int main(int argc, char* argv[])
     cout << "solving time summary" << endl;
     cout << counter << endl;
     cout << "average solving time: " << counter(2)/(counter(0) + counter(1)) << endl;
+
+    cout << "Time passed since controller start: " << observation.time << endl;
+    cout << "Time passed between 2 calls: " << (observation.time - counter(3)) * 1e6 << endl;
+    counter(3) = observation.time;
 
     // Integrate osc ddq to find velocity command
     VectorXd wb_dq_next = VectorXd::Zero(12,1);
@@ -663,6 +707,7 @@ int main(int argc, char* argv[])
     }
 
     // arm control, trial implementation. Incorporate to analytical_expressions class in the future
+    /*
     VectorXd ql = VectorXd::Zero(10,1);
     VectorXd p_lh = VectorXd::Zero(3,1);
     MatrixXd J_lh = MatrixXd::Zero(3,10);
@@ -747,7 +792,7 @@ int main(int argc, char* argv[])
     target_position[17] = qr(7);
     target_position[18] = qr(8);
     target_position[19] = qr(9); 
-
+    */
  /*   cout << "arm" << std::fixed << std::setprecision(2) << p_lh << endl;
     for(int i =0;i<3;i++){
       for(int j=0;j<10;j++){
@@ -768,7 +813,7 @@ int main(int argc, char* argv[])
       }
       else{
         command.motors[i].torque = torque(i);
-        command.motors[i].velocity = wb_dq_next(i);
+        command.motors[i].velocity = 0;
         command.motors[i].damping = 0.75 * limits->damping_limit[i];
       }
       

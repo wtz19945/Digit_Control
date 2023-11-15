@@ -15,7 +15,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/orl/Tianze_WS/Test_Control/lowlevelapi.c" "CMakeFiles/standing_controlV2.dir/lowlevelapi.c.o" "gcc" "CMakeFiles/standing_controlV2.dir/lowlevelapi.c.o.d"
   "/home/orl/Tianze_WS/Test_Control/src/kin_left_arm.cpp" "CMakeFiles/standing_controlV2.dir/src/kin_left_arm.cpp.o" "gcc" "CMakeFiles/standing_controlV2.dir/src/kin_left_arm.cpp.o.d"
   "/home/orl/Tianze_WS/Test_Control/src/kin_right_arm.cpp" "CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o" "gcc" "CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o.d"
-  "/home/orl/Tianze_WS/Test_Control/standing_control.cpp" "CMakeFiles/standing_controlV2.dir/standing_control.cpp.o" "gcc" "CMakeFiles/standing_controlV2.dir/standing_control.cpp.o.d"
+  "/home/orl/Tianze_WS/Test_Control/standing_controlV2.cpp" "CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o" "gcc" "CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o.d"
   )
 
 # Targets to which this target links.
