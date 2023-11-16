@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.14.1)
 project(CMakeHello)
 
+set(Home_Dir /home/tianze/Digit_Test/Digit_Control/)
 include_directories(/libartl
   include/GeometricKinematics
   include/AnalyticalKinematicsDynamics
   include/Eigen/
-  /home/orl/Tianze_WS/Test_Control/include/Eigen
-  /home/orl/Tianze_WS/Test_Control/include
-  /home/orl/Tianze_WS/Test_Control/include/cpptoml)
+  ${Home_Dir}include/Eigen
+  ${Home_Dir}include
+  ${Home_Dir}include/cpptoml)
 add_subdirectory(include/GeometricKinematics)
 add_subdirectory(include/AnalyticalKinematicsDynamics)
 
@@ -27,16 +28,7 @@ set(Digit_Source
 
 find_package(OsqpEigen REQUIRED)
 set(SOURCES lowlevelapi_example.cpp
-	lowlevelapi.c
-	lowlevelapi.h
-	libartl/artl.c
-	libartl/artl.h
-	libartl/artl_internal.c
-	libartl/artl_internal.h
-	libartl/crc32c.c
-	libartl/crc32c.h
-	libartl/zstd/zstd.c
-	libartl/zstd/zstd.h)
+${Digit_Source})
 
 set(standing_SOURCES standing_control.cpp
 ${Digit_Source})
