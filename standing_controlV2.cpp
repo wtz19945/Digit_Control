@@ -102,11 +102,12 @@ static double target_position[] = {
   -0.3633,//right arm
 };
 
-
 MatrixXd get_B(VectorXd q);
 MatrixXd get_Spring_Jaco();
 VectorXd ToEulerAngle(VectorXd q);
 MatrixXd get_fric_constraint(double mu);
+MatrixXd get_pr2m_jaco(VectorXd a, VectorXd b, double x, double y);
+
 double deg2rad(double deg) {
     return deg * M_PI / 180.0;
 }
@@ -290,7 +291,7 @@ int main(int argc, char* argv[])
     MatrixXd OmegaToDtheta = MatrixXd::Zero(3,3);
     OmegaToDtheta << 0 , -sin(theta(2)), cos(theta(2)) * cos(theta(1)), 0, cos(theta(2)), cos(theta(1)) * sin(theta(2)), 1, 0, -sin(theta(1));
     dtheta = OmegaToDtheta * dtheta;
-
+    
     // Wrap yaw orientation so the desired yaw is always 0
     if(elapsed_time.count() < 10000){
         yaw_des = theta(2);
@@ -302,6 +303,7 @@ int main(int argc, char* argv[])
     pel_pos(1) -= pel_y;
 
     theta(2) -= yaw_des;
+    
     if(theta(2) > M_PI){
         theta(2) = theta(2) + yaw_des - 2 * M_PI; 
     }
@@ -567,6 +569,7 @@ int main(int argc, char* argv[])
 
     // Constraint Matrix
     if(QP_initialized == 0){
+      // compute the full matrix and store the non-zero index during initialization 
       constraint_full.block(0,0,20,20) = M - damping_dt * Dmat;
       constraint_full.block(0,20,20,12) = -B;
       constraint_full.block(0,32,20,4) = -(Spring_Jaco).transpose();
@@ -595,6 +598,7 @@ int main(int argc, char* argv[])
       }
     }
     else{
+      // constant matrix like B is not updated
       constraint_full.block(0,0,20,20) = M - damping_dt * Dmat;
       //constraint_full.block(0,20,20,12) = -B;
       //constraint_full.block(0,32,20,4) = -(Spring_Jaco).transpose();
@@ -611,6 +615,7 @@ int main(int argc, char* argv[])
       constraint_full.block(50+Vars_Num,0,4,20) = right_toe_rot_jaco_fa;
       //constraint_full.block(40+Vars_Num,Vars_Num-14,14,14) = -MatrixXd::Identity(14,14);
       
+      // Speed up setting constraint matrix by assuming all non-zeros' indexes are fixed
       int coeff_iter = 0;
       for (int k=0; k<linearMatrix.outerSize(); ++k){
         for (SparseMatrix<double>::InnerIterator it(linearMatrix,k); it; ++it){
@@ -664,7 +669,6 @@ int main(int argc, char* argv[])
       solver.data()->setUpperBound(upperBound);
       solver.initSolver();
       QP_initialized = 1;
-
     }
     else{
       solver.updateGradient(gradient);
@@ -801,9 +805,13 @@ int main(int argc, char* argv[])
       cout << endl;
     }
 */
-    
-   elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-   cout << "time used to compute system dyn and kin + QP formulation + Solving + Arm IK: " << elapsed_time.count() << endl;
+  VectorXd tor = torque;
+  torque(4) = .5 * tor(4) + 1.5 * tor(5); 
+  torque(5) = -.5 * tor(4) + 1.5 * tor(5); 
+  torque(10)= .5 * tor(10) + 1.5 * tor(11);
+  torque(11)= -.5 * tor(10) + 1.5 * tor(11);
+  elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
+  cout << "time used to compute system dyn and kin + QP formulation + Solving + Arm IK: " << elapsed_time.count() << endl;
     for (int i = 0; i < NUM_MOTORS; ++i) {
       if(i>=12){
         command.motors[i].torque =
@@ -851,7 +859,7 @@ MatrixXd get_Spring_Jaco(){
 MatrixXd get_B(VectorXd q){
   // map: motor torque to joint torque
   MatrixXd B = MatrixXd::Zero(20,12);
-  VectorXd a,b,c,d;
+  VectorXd a,b,c,d,e,f,g,h;
   a.resize(6);
   b.resize(6);
   c.resize(6);
@@ -861,9 +869,22 @@ MatrixXd get_B(VectorXd q){
   c << -0.003061, -0.9412, 0.2812, 0.1121, -0.1288, -0.06276;
   d << 0.003154, 0.9416, 0.2848, -0.1133, -0.1315, 0.06146;
 
+  e.resize(15);
+  f.resize(15);
+  g.resize(15);
+  h.resize(15);
+
+  e <<  0.01785,-0.9256,0.2938,-0.08362,0.103,0.06534,0.02975,-0.02949,-0.01311,-0.03942,-0.03918,0.06356,-0.0451,-0.02977,-0.003042;  
+  f << -0.01785,0.9257,0.2972,0.08384,0.1044,-0.06483,-0.02988,-0.02979,0.01411,-0.039,0.04013,0.06584,0.04692,-0.02893,0.003069; 
+  g << -0.01785,-0.9255,0.2938,0.08367,-0.1029,-0.06529,0.0297,-0.02936,-0.01315,-0.03937,0.03896,-0.06342,0.04496,0.02929,0.002823;  
+  h <<  0.01785,0.9257,0.2972,-0.08391,-0.1045,0.06483,-0.02982,-0.02973,0.01419,-0.03903,-0.03976,-0.06553,-0.04701,0.02931,-0.003061; 
+
+  MatrixXd left_J2 = get_pr2m_jaco(e,f,q(11),q(12));
+  MatrixXd right_J2 = get_pr2m_jaco(g,h,q(18),q(19));
   VectorXd left_toe_j = VectorXd::Zero(2,1);
   MatrixXd left_J = MatrixXd::Zero(2,2);
   left_toe_j << q(11) , q(12);
+
 
   left_J(0,0) = a(1) + 2*a(3) * left_toe_j(0) + a(4) * left_toe_j(1);
   left_J(0,1) = a(2) + 2*a(5) * left_toe_j(1) + a(4) * left_toe_j(0); 
@@ -877,10 +898,10 @@ MatrixXd get_B(VectorXd q){
   //B(wbc::left_toe_pitch,4) = 1;
   //B(wbc::left_toe_roll,5) = 1;
 
-  B(wbc::left_toe_pitch,4) = left_J(0,0);
-  B(wbc::left_toe_pitch,5) = left_J(1,0);
-  B(wbc::left_toe_roll,4) = left_J(0,1);
-  B(wbc::left_toe_roll,5) = left_J(1,1);
+  B(wbc::left_toe_pitch,4) = left_J2(0,0);
+  B(wbc::left_toe_pitch,5) = left_J2(1,0);
+  B(wbc::left_toe_roll,4) = left_J2(0,1);
+  B(wbc::left_toe_roll,5) = left_J2(1,1);
 
   VectorXd right_toe_j = VectorXd::Zero(2,1);
   MatrixXd right_J = MatrixXd::Zero(2,2);
@@ -898,10 +919,10 @@ MatrixXd get_B(VectorXd q){
   //B(wbc::right_toe_pitch,10) = 1;
   //B(wbc::right_toe_roll,11) = 1;
 
-  B(wbc::right_toe_pitch,10) = right_J(0,0);
-  B(wbc::right_toe_pitch,11) = right_J(1,0);
-  B(wbc::right_toe_roll,10) = right_J(0,1);
-  B(wbc::right_toe_roll,11) = right_J(1,1);
+  B(wbc::right_toe_pitch,10) = right_J2(0,0);
+  B(wbc::right_toe_pitch,11) = right_J2(1,0);
+  B(wbc::right_toe_roll,10) = right_J2(0,1);
+  B(wbc::right_toe_roll,11) = right_J2(1,1);
   return B;
 }
 
@@ -940,4 +961,13 @@ VectorXd ToEulerAngle(VectorXd q){
     theta(2) = std::atan2(siny_cosp, cosy_cosp);
 
     return theta;
+}
+
+MatrixXd get_pr2m_jaco(VectorXd a, VectorXd b, double x, double y){
+  MatrixXd jaco = MatrixXd::Zero(2,2);
+  jaco(0,0) = a(1) + 2*a(3)*x + a(4)*y + 3*a(6)*pow(x,2) + 2*a(7) * x*y + a(8)*pow(y,2) + 4*a(10)*pow(x,3) + 3*a(11)*pow(x,2)*y + 2*a(12)*x*pow(y,2) + a(13)*pow(y,3);
+  jaco(0,1) = a(2) + 2*a(5)*y + a(4)*x + 3*a(9)*pow(y,2) + 2*a(8) * x*y + a(7)*pow(x,2) + 4*a(14)*pow(y,3) + 3*a(13)*pow(y,2)*x + 2*a(12)*y*pow(x,2) + a(11)*pow(x,3);
+  jaco(1,0) = b(1) + 2*b(3)*x + b(4)*y + 3*b(6)*pow(x,2) + 2*b(7) * x*y + b(8)*pow(y,2) + 4*b(10)*pow(x,3) + 3*b(11)*pow(x,2)*y + 2*b(12)*x*pow(y,2) + b(13)*pow(y,3);
+  jaco(1,1) = b(2) + 2*b(5)*y + b(4)*x + 3*b(9)*pow(y,2) + 2*b(8) * x*y + b(7)*pow(x,2) + 4*b(14)*pow(y,3) + 3*b(13)*pow(y,2)*x + 2*b(12)*y*pow(x,2) + b(11)*pow(x,3);
+  return jaco;
 }
