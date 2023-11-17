@@ -19,6 +19,7 @@
 #include "kin_left_arm.hpp"
 #include "kin_right_arm.hpp"
 #include "cpptoml/include/cpptoml.h"
+#include "Digit_safety.hpp"
 //#include "toml.hpp"
 
 // TODO: Move to head file
@@ -107,13 +108,20 @@ MatrixXd get_Spring_Jaco();
 VectorXd ToEulerAngle(VectorXd q);
 MatrixXd get_fric_constraint(double mu);
 MatrixXd get_pr2m_jaco(VectorXd a, VectorXd b, double x, double y);
+<<<<<<< HEAD
 
 double deg2rad(double deg) {
     return deg * M_PI / 180.0;
 }
+=======
+>>>>>>> origin/main
 
 #define NUM_FROST_STATE 28
 #define NUM_Dyn_STATE 20
+#define NUM_LEG_STATE 14
+#define NUM_PEL_STATE 6
+#define NUM_ARM_STATE 8
+
 using namespace std;
 using namespace std::chrono;
 int main(int argc, char* argv[])
@@ -160,7 +168,8 @@ int main(int argc, char* argv[])
   const llapi_limits_t* limits = llapi_get_limits();
   
   // Load Gains from TOML file
-  std::shared_ptr<cpptoml::table> config = cpptoml::parse_file("/home/orl/Tianze_WS/Test_Control/src/config_file/osc_robot_config.toml");
+  std::shared_ptr<cpptoml::table> config = cpptoml::parse_file("src/config_file/osc_robot_config.toml");
+
   double cpx = config->get_qualified_as<double>("PD-Gains.com_P_gain_x").value_or(0);
   double cpy = config->get_qualified_as<double>("PD-Gains.com_P_gain_y").value_or(0);
   double cpz = config->get_qualified_as<double>("PD-Gains.com_P_gain_z").value_or(0);
@@ -190,6 +199,7 @@ int main(int argc, char* argv[])
   double mu = config->get_qualified_as<double>("QP-Params.mu").value_or(0);
 
   double arm_P = config->get_qualified_as<double>("PD-Gains.arm_P").value_or(0);
+  int wd_sz = config->get_qualified_as<double>("Filter.wd_sz").value_or(0);
 
   // Weight Matrix and Gain Vector
   MatrixXd Weight_ToeF = Wff*MatrixXd::Identity(6,6);
@@ -258,6 +268,9 @@ int main(int argc, char* argv[])
   double vel_y = 0;
   double vel_z = 0;
 
+  // initialize safety checker
+  Digit_safety safe_check(wd_sz,NUM_LEG_STATE);
+
   while (1) {
     
     // count running time
@@ -302,7 +315,16 @@ int main(int argc, char* argv[])
     MatrixXd OmegaToDtheta = MatrixXd::Zero(3,3);
     OmegaToDtheta << 0 , -sin(theta(2)), cos(theta(2)) * cos(theta(1)), 0, cos(theta(2)), cos(theta(1)) * sin(theta(2)), 1, 0, -sin(theta(1));
     dtheta = OmegaToDtheta * dtheta;
+<<<<<<< HEAD
     
+=======
+
+    MatrixXd rotZ = MatrixXd::Zero(3,3);
+    rotZ << cos(theta(2)),-sin(theta(2)),0,sin(theta(2)),cos(theta(2)),0,0,0,1;
+    pel_pos = rotZ.transpose() * pel_pos;
+    // Controller does not work when velocity transformation is included. Why???
+    // pel_vel = rotZ.transpose() * pel_vel; 
+>>>>>>> origin/main
     // Wrap yaw orientation so the desired yaw is always 0
     if(elapsed_time.count() < 10000){
         yaw_des = theta(2);
@@ -310,27 +332,35 @@ int main(int argc, char* argv[])
         pel_y = pel_pos(1);
     }
 
+<<<<<<< HEAD
     MatrixXd rotZ = MatrixXd::Zero(3,3);
     rotZ << cos(theta(2)),-sin(theta(2)),0,sin(theta(2)),cos(theta(2)),0,0,0,1;
     pel_pos = rotZ.transpose() * pel_pos;
     //pel_vel = rotZ * pel_vel;
 
+=======
+    pel_pos(0) -= pel_x;
+    pel_pos(1) -= pel_y;
+>>>>>>> origin/main
     theta(2) -= yaw_des;
     
     if(theta(2) > M_PI){
-        theta(2) = theta(2) + yaw_des - 2 * M_PI; 
+        theta(2) -= 2 * M_PI; 
     }
     else if(theta(2) < -M_PI){
-        theta(2) = theta(2) + yaw_des;
+        theta(2) += 2 * M_PI;
     }
     else{
       //;
     }
-    cout << "current theta: " << theta(2) << endl << yaw_des << endl;
+    cout << "current theta: " << yaw_des << endl;
     cout << theta << endl;
-    cout << pel_pos << endl;
-    cout << dtheta << endl;
-    cout << pel_vel << endl;
+    if(abs(theta(2)) >0.1){
+      cout << theta_copy(2) << endl;
+      cout << yaw_des << endl;
+      cout << theta(2) <<"!!!" << endl;
+      getchar();
+    }
 
 
     // get state vector
@@ -720,9 +750,9 @@ int main(int argc, char* argv[])
       else
         wb_dq_next(i) = wb_dq(8+i) + damping_dt * QPSolution(8+i);
     }
-
+/*
     // arm control, trial implementation. Incorporate to analytical_expressions class in the future
-    /*
+    
     VectorXd ql = VectorXd::Zero(10,1);
     VectorXd p_lh = VectorXd::Zero(3,1);
     MatrixXd J_lh = MatrixXd::Zero(3,10);
@@ -735,7 +765,7 @@ int main(int argc, char* argv[])
     VectorXd p_rh_ref = VectorXd::Zero(3,1);
     VectorXd p_rh_err = VectorXd::Zero(3,1);
 
-    int period = 1000;
+    int period = 2000;
     soft_start++;
     if(soft_start>period){
       soft_start = 0;
@@ -807,7 +837,7 @@ int main(int argc, char* argv[])
     target_position[17] = qr(7);
     target_position[18] = qr(8);
     target_position[19] = qr(9); 
-    */
+*/
  /*   cout << "arm" << std::fixed << std::setprecision(2) << p_lh << endl;
     for(int i =0;i<3;i++){
       for(int j=0;j<10;j++){
@@ -816,7 +846,10 @@ int main(int argc, char* argv[])
       cout << endl;
     }
 */
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
   elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
   cout << "time used to compute system dyn and kin + QP formulation + Solving + Arm IK: " << elapsed_time.count() << endl;
     for (int i = 0; i < NUM_MOTORS; ++i) {
@@ -878,7 +911,11 @@ MatrixXd get_B(VectorXd q){
   b << -0.003154, 0.9416, 0.2848, 0.1133, 0.1315, -0.06146;
   c << -0.003061, -0.9412, 0.2812, 0.1121, -0.1288, -0.06276;
   d << 0.003154, 0.9416, 0.2848, -0.1133, -0.1315, 0.06146;
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> origin/main
   e.resize(15);
   f.resize(15);
   g.resize(15);
@@ -891,7 +928,10 @@ MatrixXd get_B(VectorXd q){
 
   MatrixXd left_J2 = get_pr2m_jaco(e,f,q(11),q(12));
   MatrixXd right_J2 = get_pr2m_jaco(g,h,q(18),q(19));
+<<<<<<< HEAD
   */
+=======
+>>>>>>> origin/main
   VectorXd left_toe_j = VectorXd::Zero(2,1);
   MatrixXd left_J = MatrixXd::Zero(2,2);
   left_toe_j << q(11) , q(12);
@@ -909,10 +949,10 @@ MatrixXd get_B(VectorXd q){
   //B(wbc::left_toe_pitch,4) = 1;
   //B(wbc::left_toe_roll,5) = 1;
 
-  B(wbc::left_toe_pitch,4) = left_J(0,0);
-  B(wbc::left_toe_pitch,5) = left_J(1,0);
-  B(wbc::left_toe_roll,4) = left_J(0,1);
-  B(wbc::left_toe_roll,5) = left_J(1,1);
+  B(wbc::left_toe_pitch,4) = left_J2(0,0);
+  B(wbc::left_toe_pitch,5) = left_J2(1,0);
+  B(wbc::left_toe_roll,4) = left_J2(0,1);
+  B(wbc::left_toe_roll,5) = left_J2(1,1);
 
   VectorXd right_toe_j = VectorXd::Zero(2,1);
   MatrixXd right_J = MatrixXd::Zero(2,2);
@@ -930,10 +970,10 @@ MatrixXd get_B(VectorXd q){
   //B(wbc::right_toe_pitch,10) = 1;
   //B(wbc::right_toe_roll,11) = 1;
 
-  B(wbc::right_toe_pitch,10) = right_J(0,0);
-  B(wbc::right_toe_pitch,11) = right_J(1,0);
-  B(wbc::right_toe_roll,10) = right_J(0,1);
-  B(wbc::right_toe_roll,11) = right_J(1,1);
+  B(wbc::right_toe_pitch,10) = right_J2(0,0);
+  B(wbc::right_toe_pitch,11) = right_J2(1,0);
+  B(wbc::right_toe_roll,10) = right_J2(0,1);
+  B(wbc::right_toe_roll,11) = right_J2(1,1);
   return B;
 }
 

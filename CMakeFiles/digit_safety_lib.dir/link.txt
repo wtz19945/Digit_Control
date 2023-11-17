@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdigit_safety_lib.a CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.o
+/usr/bin/ranlib libdigit_safety_lib.a

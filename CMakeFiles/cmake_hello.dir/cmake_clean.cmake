@@ -11,6 +11,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/cmake_hello.dir/lowlevelapi.c.o.d"
   "CMakeFiles/cmake_hello.dir/lowlevelapi_example.cpp.o"
   "CMakeFiles/cmake_hello.dir/lowlevelapi_example.cpp.o.d"
+  "CMakeFiles/cmake_hello.dir/src/kin_left_arm.cpp.o"
+  "CMakeFiles/cmake_hello.dir/src/kin_left_arm.cpp.o.d"
+  "CMakeFiles/cmake_hello.dir/src/kin_right_arm.cpp.o"
+  "CMakeFiles/cmake_hello.dir/src/kin_right_arm.cpp.o.d"
   "cmake_hello"
   "cmake_hello.pdb"
 )

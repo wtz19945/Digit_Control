@@ -16,7 +16,7 @@ OSQP-Eigen Github       : https://github.com/robotology/osqp-eigen
 ## Start Simulator
 To run the Agility simulator, run the following command
 - chmod +x ar-control
-- ./ar-control
+- ./ar-control ./examples/lowlevelapi_example.toml
 
 This will start a webpage at localhost:8080. Open this link with your browser. You can read the detailed Digit documentation or simulate Digit robot in this webpage.
 
@@ -30,4 +30,4 @@ To compile the code, run:
 
 When the operation mode is set to low-level-api, you should see optimization status from the terminal and digit starts moving.
 
-Note that you need to modify the directories depending on where you store the files.
+Note that you need to modify the directories depending on where you store the files and delete CMakeCache.txt to have cmake running

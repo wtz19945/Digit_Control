@@ -1,4 +1,4 @@
-# Install script for directory: /home/orl/Tianze_WS/Test_Control
+# Install script for directory: /home/tianze/Digit_Test/Digit_Control
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,12 +44,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/orl/Tianze_WS/Test_Control/include/GeometricKinematics/cmake_install.cmake")
+  include("/home/tianze/Digit_Test/Digit_Control/include/GeometricKinematics/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics/cmake_install.cmake")
+  include("/home/tianze/Digit_Test/Digit_Control/include/AnalyticalKinematicsDynamics/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -60,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/orl/Tianze_WS/Test_Control/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/tianze/Digit_Test/Digit_Control/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
