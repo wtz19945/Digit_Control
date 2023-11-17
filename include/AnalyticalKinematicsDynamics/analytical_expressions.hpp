@@ -4,14 +4,14 @@
 // Include Files
 # include <iostream>
 
-#include "/home/tianze/Digit_Test/Digit_Control/include/Eigen/Dense"
+#include "Eigen/Dense"
 #include <cmath>
 #include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "/home/tianze/Digit_Test/Digit_Control/include/MathExpr/math2mat.hpp"
-#include "/home/tianze/Digit_Test/Digit_Control/include/MathExpr/mdefs.hpp"
+#include "MathExpr/math2mat.hpp"
+#include "MathExpr/mdefs.hpp"
 
 #include "all_kinematics.h" // .h file are all the same for fixed and non-fixed arm.
 #include "dynFixArm/InertiaMatrix_src.h"

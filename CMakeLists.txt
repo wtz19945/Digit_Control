@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.14.1)
 project(CMakeHello)
 
-set(Home_Dir /home/tianze/Digit_Test/Digit_Control/)
+set(Home_Dir ${CMAKE_CURRENT_SOURCE_DIR}) # change this to your directory 
 include_directories(/libartl
   include/GeometricKinematics
   include/AnalyticalKinematicsDynamics
   include/Eigen/
-  ${Home_Dir}include/Eigen
-  ${Home_Dir}include
-  ${Home_Dir}include/cpptoml)
+  ${Home_Dir}/include/Eigen
+  ${Home_Dir}/include
+  ${Home_Dir}/include/cpptoml)
 add_subdirectory(include/GeometricKinematics)
 add_subdirectory(include/AnalyticalKinematicsDynamics)
 

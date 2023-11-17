@@ -490,7 +490,6 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: \
  /home/tianze/Digit_Test/Digit_Control/lowlevelapi.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/stdbool.h \
  /home/tianze/Digit_Test/Digit_Control/include/AnalyticalKinematicsDynamics/analytical_expressions.hpp \
- /home/tianze/Digit_Test/Digit_Control/include/Eigen/Dense \
  /home/tianze/Digit_Test/Digit_Control/include/MathExpr/math2mat.hpp \
  /home/tianze/Digit_Test/Digit_Control/include/MathExpr/mdefs.hpp \
  /home/tianze/Digit_Test/Digit_Control/include/AnalyticalKinematicsDynamics/all_kinematics.h \
