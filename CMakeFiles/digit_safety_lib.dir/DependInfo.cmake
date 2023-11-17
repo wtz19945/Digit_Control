@@ -8,11 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/tianze/Digit_Test/Digit_Control/src/Digit_safety.cpp" "CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.o" "gcc" "CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.o.d"
+  "/home/orl/Tianze_WS/Test_Control/src/Digit_safety.cpp" "CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.o" "gcc" "CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.o.d"
   )
 
-# Targets to which this target links which contain Fortran sources.
-set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.

@@ -1,4 +1,4 @@
-# Install script for directory: /home/tianze/Digit_Test/Digit_Control/include/AnalyticalKinematicsDynamics
+# Install script for directory: /home/orl/Tianze_WS/Test_Control/include/AnalyticalKinematicsDynamics
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

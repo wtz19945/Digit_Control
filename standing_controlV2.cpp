@@ -108,13 +108,6 @@ MatrixXd get_Spring_Jaco();
 VectorXd ToEulerAngle(VectorXd q);
 MatrixXd get_fric_constraint(double mu);
 MatrixXd get_pr2m_jaco(VectorXd a, VectorXd b, double x, double y);
-<<<<<<< HEAD
-
-double deg2rad(double deg) {
-    return deg * M_PI / 180.0;
-}
-=======
->>>>>>> origin/main
 
 #define NUM_FROST_STATE 28
 #define NUM_Dyn_STATE 20
@@ -315,16 +308,12 @@ int main(int argc, char* argv[])
     MatrixXd OmegaToDtheta = MatrixXd::Zero(3,3);
     OmegaToDtheta << 0 , -sin(theta(2)), cos(theta(2)) * cos(theta(1)), 0, cos(theta(2)), cos(theta(1)) * sin(theta(2)), 1, 0, -sin(theta(1));
     dtheta = OmegaToDtheta * dtheta;
-<<<<<<< HEAD
-    
-=======
 
     MatrixXd rotZ = MatrixXd::Zero(3,3);
     rotZ << cos(theta(2)),-sin(theta(2)),0,sin(theta(2)),cos(theta(2)),0,0,0,1;
     pel_pos = rotZ.transpose() * pel_pos;
     // Controller does not work when velocity transformation is included. Why???
     // pel_vel = rotZ.transpose() * pel_vel; 
->>>>>>> origin/main
     // Wrap yaw orientation so the desired yaw is always 0
     if(elapsed_time.count() < 10000){
         yaw_des = theta(2);
@@ -332,16 +321,8 @@ int main(int argc, char* argv[])
         pel_y = pel_pos(1);
     }
 
-<<<<<<< HEAD
-    MatrixXd rotZ = MatrixXd::Zero(3,3);
-    rotZ << cos(theta(2)),-sin(theta(2)),0,sin(theta(2)),cos(theta(2)),0,0,0,1;
-    pel_pos = rotZ.transpose() * pel_pos;
-    //pel_vel = rotZ * pel_vel;
-
-=======
     pel_pos(0) -= pel_x;
     pel_pos(1) -= pel_y;
->>>>>>> origin/main
     theta(2) -= yaw_des;
     
     if(theta(2) > M_PI){
@@ -355,13 +336,6 @@ int main(int argc, char* argv[])
     }
     cout << "current theta: " << yaw_des << endl;
     cout << theta << endl;
-    if(abs(theta(2)) >0.1){
-      cout << theta_copy(2) << endl;
-      cout << yaw_des << endl;
-      cout << theta(2) <<"!!!" << endl;
-      getchar();
-    }
-
 
     // get state vector
     wb_q  << pel_pos, theta(2), theta(1), theta(0), q(joint::left_hip_roll),q(joint::left_hip_yaw),q(joint::left_hip_pitch),q(joint::left_knee)
@@ -846,25 +820,29 @@ int main(int argc, char* argv[])
       cout << endl;
     }
 */
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
+  // safety check
+  safe_check.updateSafety(pb_q.block(6,0,14,1),pb_dq.block(6,0,14,1));
   elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
   cout << "time used to compute system dyn and kin + QP formulation + Solving + Arm IK: " << elapsed_time.count() << endl;
     for (int i = 0; i < NUM_MOTORS; ++i) {
-      if(i>=12){
-        command.motors[i].torque =
-          arm_P * (target_position[i] - observation.motor.position[i]);
+      if(safe_check.checkSafety()){
+          command.motors[i].torque = -arm_P/10 * observation.motor.velocity[i];
           command.motors[i].velocity = 0;
-          command.motors[i].damping = 0.75 * limits->damping_limit[i];
+          command.motors[i].damping = 1 * limits->damping_limit[i];
       }
       else{
-        command.motors[i].torque = torque(i);
-        command.motors[i].velocity = 0;
-        command.motors[i].damping = 0.75 * limits->damping_limit[i];
+        if(i>=12){
+          command.motors[i].torque =
+            arm_P * (target_position[i] - observation.motor.position[i]);
+            command.motors[i].velocity = 0;
+            command.motors[i].damping = 0.75 * limits->damping_limit[i];
+        }
+        else{
+          command.motors[i].torque = torque(i);
+          command.motors[i].velocity = 0;
+          command.motors[i].damping = 0.75 * limits->damping_limit[i];
+        }
       }
-      
     }
     command.fallback_opmode = Locomotion; // Useful for simulation
     command.apply_command = true;
@@ -911,12 +889,7 @@ MatrixXd get_B(VectorXd q){
   b << -0.003154, 0.9416, 0.2848, 0.1133, 0.1315, -0.06146;
   c << -0.003061, -0.9412, 0.2812, 0.1121, -0.1288, -0.06276;
   d << 0.003154, 0.9416, 0.2848, -0.1133, -0.1315, 0.06146;
-<<<<<<< HEAD
-/*
-=======
-
->>>>>>> origin/main
-  e.resize(15);
+  /*e.resize(15);
   f.resize(15);
   g.resize(15);
   h.resize(15);
@@ -928,10 +901,7 @@ MatrixXd get_B(VectorXd q){
 
   MatrixXd left_J2 = get_pr2m_jaco(e,f,q(11),q(12));
   MatrixXd right_J2 = get_pr2m_jaco(g,h,q(18),q(19));
-<<<<<<< HEAD
   */
-=======
->>>>>>> origin/main
   VectorXd left_toe_j = VectorXd::Zero(2,1);
   MatrixXd left_J = MatrixXd::Zero(2,2);
   left_toe_j << q(11) , q(12);
@@ -949,10 +919,10 @@ MatrixXd get_B(VectorXd q){
   //B(wbc::left_toe_pitch,4) = 1;
   //B(wbc::left_toe_roll,5) = 1;
 
-  B(wbc::left_toe_pitch,4) = left_J2(0,0);
-  B(wbc::left_toe_pitch,5) = left_J2(1,0);
-  B(wbc::left_toe_roll,4) = left_J2(0,1);
-  B(wbc::left_toe_roll,5) = left_J2(1,1);
+  B(wbc::left_toe_pitch,4) = left_J(0,0);
+  B(wbc::left_toe_pitch,5) = left_J(1,0);
+  B(wbc::left_toe_roll,4) = left_J(0,1);
+  B(wbc::left_toe_roll,5) = left_J(1,1);
 
   VectorXd right_toe_j = VectorXd::Zero(2,1);
   MatrixXd right_J = MatrixXd::Zero(2,2);
@@ -970,10 +940,10 @@ MatrixXd get_B(VectorXd q){
   //B(wbc::right_toe_pitch,10) = 1;
   //B(wbc::right_toe_roll,11) = 1;
 
-  B(wbc::right_toe_pitch,10) = right_J2(0,0);
-  B(wbc::right_toe_pitch,11) = right_J2(1,0);
-  B(wbc::right_toe_roll,10) = right_J2(0,1);
-  B(wbc::right_toe_roll,11) = right_J2(1,1);
+  B(wbc::right_toe_pitch,10) = right_J(0,0);
+  B(wbc::right_toe_pitch,11) = right_J(1,0);
+  B(wbc::right_toe_roll,10) = right_J(0,1);
+  B(wbc::right_toe_roll,11) = right_J(1,1);
   return B;
 }
 
