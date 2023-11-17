@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
   const llapi_limits_t* limits = llapi_get_limits();
   
   // Load Gains from TOML file
-  std::shared_ptr<cpptoml::table> config = cpptoml::parse_file("src/config_file/osc_robot_config.toml");
+  std::shared_ptr<cpptoml::table> config = cpptoml::parse_file("../src/config_file/osc_robot_config.toml");
 
   double cpx = config->get_qualified_as<double>("PD-Gains.com_P_gain_x").value_or(0);
   double cpy = config->get_qualified_as<double>("PD-Gains.com_P_gain_y").value_or(0);
