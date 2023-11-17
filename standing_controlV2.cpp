@@ -288,10 +288,16 @@ int main(int argc, char* argv[])
     pel_quaternion(3) = observation.base.orientation.z;
     
     theta = ToEulerAngle(pel_quaternion); // in roll, pitch, yaw order
+    VectorXd theta_copy = theta;
     MatrixXd OmegaToDtheta = MatrixXd::Zero(3,3);
     OmegaToDtheta << 0 , -sin(theta(2)), cos(theta(2)) * cos(theta(1)), 0, cos(theta(2)), cos(theta(1)) * sin(theta(2)), 1, 0, -sin(theta(1));
     dtheta = OmegaToDtheta * dtheta;
-    
+
+    MatrixXd rotZ = MatrixXd::Zero(3,3);
+    rotZ << cos(theta(2)),-sin(theta(2)),0,sin(theta(2)),cos(theta(2)),0,0,0,1;
+    pel_pos = rotZ.transpose() * pel_pos;
+    // Controller does not work when velocity transformation is included. Why???
+    // pel_vel = rotZ.transpose() * pel_vel; 
     // Wrap yaw orientation so the desired yaw is always 0
     if(elapsed_time.count() < 10000){
         yaw_des = theta(2);
@@ -301,23 +307,25 @@ int main(int argc, char* argv[])
 
     pel_pos(0) -= pel_x;
     pel_pos(1) -= pel_y;
-
     theta(2) -= yaw_des;
     
     if(theta(2) > M_PI){
-        theta(2) = theta(2) + yaw_des - 2 * M_PI; 
+        theta(2) -= 2 * M_PI; 
     }
     else if(theta(2) < -M_PI){
-        theta(2) = theta(2) + yaw_des;
+        theta(2) += 2 * M_PI;
     }
     else{
       //;
     }
-    cout << "current theta: " << theta(2) << endl << yaw_des << endl;
+    cout << "current theta: " << yaw_des << endl;
     cout << theta << endl;
-    cout << pel_pos << endl;
-    cout << dtheta << endl;
-    cout << pel_vel << endl;
+    if(abs(theta(2)) >0.1){
+      cout << theta_copy(2) << endl;
+      cout << yaw_des << endl;
+      cout << theta(2) <<"!!!" << endl;
+      getchar();
+    }
 
 
     // get state vector
@@ -711,7 +719,7 @@ int main(int argc, char* argv[])
     }
 
     // arm control, trial implementation. Incorporate to analytical_expressions class in the future
-    /*
+    
     VectorXd ql = VectorXd::Zero(10,1);
     VectorXd p_lh = VectorXd::Zero(3,1);
     MatrixXd J_lh = MatrixXd::Zero(3,10);
@@ -724,7 +732,7 @@ int main(int argc, char* argv[])
     VectorXd p_rh_ref = VectorXd::Zero(3,1);
     VectorXd p_rh_err = VectorXd::Zero(3,1);
 
-    int period = 1000;
+    int period = 2000;
     soft_start++;
     if(soft_start>period){
       soft_start = 0;
@@ -796,7 +804,7 @@ int main(int argc, char* argv[])
     target_position[17] = qr(7);
     target_position[18] = qr(8);
     target_position[19] = qr(9); 
-    */
+    
  /*   cout << "arm" << std::fixed << std::setprecision(2) << p_lh << endl;
     for(int i =0;i<3;i++){
       for(int j=0;j<10;j++){
@@ -805,11 +813,6 @@ int main(int argc, char* argv[])
       cout << endl;
     }
 */
-  VectorXd tor = torque;
-  torque(4) = .5 * tor(4) + 1.5 * tor(5); 
-  torque(5) = -.5 * tor(4) + 1.5 * tor(5); 
-  torque(10)= .5 * tor(10) + 1.5 * tor(11);
-  torque(11)= -.5 * tor(10) + 1.5 * tor(11);
   elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
   cout << "time used to compute system dyn and kin + QP formulation + Solving + Arm IK: " << elapsed_time.count() << endl;
     for (int i = 0; i < NUM_MOTORS; ++i) {
