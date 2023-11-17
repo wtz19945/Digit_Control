@@ -206,6 +206,7 @@ standing_controlV2: CMakeFiles/standing_controlV2.dir/src/kin_right_arm.cpp.o
 standing_controlV2: CMakeFiles/standing_controlV2.dir/build.make
 standing_controlV2: /home/tianze/anaconda3/lib/libOsqpEigen.so.0.8.1
 standing_controlV2: include/AnalyticalKinematicsDynamics/libkinematics_dynamics_lib.a
+standing_controlV2: libdigit_safety_lib.a
 standing_controlV2: /home/tianze/anaconda3/lib/libosqp.so
 standing_controlV2: CMakeFiles/standing_controlV2.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/tianze/Digit_Test/Digit_Control/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable standing_controlV2"

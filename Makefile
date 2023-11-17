@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named digit_safety_lib
+
+# Build rule for target.
+digit_safety_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 digit_safety_lib
+.PHONY : digit_safety_lib
+
+# fast build rule for target.
+digit_safety_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/digit_safety_lib.dir/build.make CMakeFiles/digit_safety_lib.dir/build
+.PHONY : digit_safety_lib/fast
+
+#=============================================================================
 # Target rules for targets named cmake_hello
 
 # Build rule for target.
@@ -394,6 +407,30 @@ lowlevelapi_example.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cmake_hello.dir/build.make CMakeFiles/cmake_hello.dir/lowlevelapi_example.cpp.s
 .PHONY : lowlevelapi_example.cpp.s
 
+src/Digit_safety.o: src/Digit_safety.cpp.o
+.PHONY : src/Digit_safety.o
+
+# target to build an object file
+src/Digit_safety.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/digit_safety_lib.dir/build.make CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.o
+.PHONY : src/Digit_safety.cpp.o
+
+src/Digit_safety.i: src/Digit_safety.cpp.i
+.PHONY : src/Digit_safety.i
+
+# target to preprocess a source file
+src/Digit_safety.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/digit_safety_lib.dir/build.make CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.i
+.PHONY : src/Digit_safety.cpp.i
+
+src/Digit_safety.s: src/Digit_safety.cpp.s
+.PHONY : src/Digit_safety.s
+
+# target to generate assembly for a file
+src/Digit_safety.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/digit_safety_lib.dir/build.make CMakeFiles/digit_safety_lib.dir/src/Digit_safety.cpp.s
+.PHONY : src/Digit_safety.cpp.s
+
 src/kin_left_arm.o: src/kin_left_arm.cpp.o
 .PHONY : src/kin_left_arm.o
 
@@ -513,6 +550,7 @@ help:
 	@echo "... GeometricKinematicsMain"
 	@echo "... GeometricKinematicsTest"
 	@echo "... cmake_hello"
+	@echo "... digit_safety_lib"
 	@echo "... geometric_kinematics_lib"
 	@echo "... kin_dyn_test"
 	@echo "... kinematics_dynamics_lib"
@@ -536,6 +574,9 @@ help:
 	@echo "... lowlevelapi_example.o"
 	@echo "... lowlevelapi_example.i"
 	@echo "... lowlevelapi_example.s"
+	@echo "... src/Digit_safety.o"
+	@echo "... src/Digit_safety.i"
+	@echo "... src/Digit_safety.s"
 	@echo "... src/kin_left_arm.o"
 	@echo "... src/kin_left_arm.i"
 	@echo "... src/kin_left_arm.s"

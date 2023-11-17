@@ -36,6 +36,12 @@ ${Digit_Source})
 set(standing_SOURCESV2 standing_controlV2.cpp
 ${Digit_Source})
 
+
+add_library(digit_safety_lib STATIC src/Digit_safety.cpp)
+target_include_directories(digit_safety_lib 
+    PUBLIC 
+    ${Home_Dir}/include)
+
 add_executable(cmake_hello ${SOURCES})
 target_link_libraries(cmake_hello OsqpEigen::OsqpEigen kinematics_dynamics_lib)
 
@@ -43,4 +49,4 @@ add_executable(standing_control ${standing_SOURCES})
 target_link_libraries(standing_control OsqpEigen::OsqpEigen kinematics_dynamics_lib)
 
 add_executable(standing_controlV2 ${standing_SOURCESV2})
-target_link_libraries(standing_controlV2 OsqpEigen::OsqpEigen kinematics_dynamics_lib)
+target_link_libraries(standing_controlV2 OsqpEigen::OsqpEigen kinematics_dynamics_lib digit_safety_lib)

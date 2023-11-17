@@ -19,6 +19,7 @@
 #include "kin_left_arm.hpp"
 #include "kin_right_arm.hpp"
 #include "cpptoml/include/cpptoml.h"
+#include "Digit_safety.hpp"
 //#include "toml.hpp"
 
 // TODO: Move to head file
@@ -108,12 +109,12 @@ VectorXd ToEulerAngle(VectorXd q);
 MatrixXd get_fric_constraint(double mu);
 MatrixXd get_pr2m_jaco(VectorXd a, VectorXd b, double x, double y);
 
-double deg2rad(double deg) {
-    return deg * M_PI / 180.0;
-}
-
 #define NUM_FROST_STATE 28
 #define NUM_Dyn_STATE 20
+#define NUM_LEG_STATE 14
+#define NUM_PEL_STATE 6
+#define NUM_ARM_STATE 8
+
 using namespace std;
 using namespace std::chrono;
 int main(int argc, char* argv[])
@@ -183,6 +184,7 @@ int main(int argc, char* argv[])
   double mu = config->get_qualified_as<double>("QP-Params.mu").value_or(0);
 
   double arm_P = config->get_qualified_as<double>("PD-Gains.arm_P").value_or(0);
+  int wd_sz = config->get_qualified_as<double>("Filter.wd_sz").value_or(0);
 
   // Weight Matrix and Gain Vector
   MatrixXd Weight_ToeF = Wff*MatrixXd::Identity(6,6);
@@ -247,6 +249,9 @@ int main(int argc, char* argv[])
   double yaw_des = 0;
   double pel_x = 0;
   double pel_y = 0;
+
+  // initialize safety checker
+  Digit_safety safe_check(wd_sz,NUM_LEG_STATE);
 
   while (1) {
     
@@ -718,7 +723,7 @@ int main(int argc, char* argv[])
       else
         wb_dq_next(i) = wb_dq(8+i) + damping_dt * QPSolution(8+i);
     }
-
+/*
     // arm control, trial implementation. Incorporate to analytical_expressions class in the future
     
     VectorXd ql = VectorXd::Zero(10,1);
@@ -805,7 +810,7 @@ int main(int argc, char* argv[])
     target_position[17] = qr(7);
     target_position[18] = qr(8);
     target_position[19] = qr(9); 
-    
+*/
  /*   cout << "arm" << std::fixed << std::setprecision(2) << p_lh << endl;
     for(int i =0;i<3;i++){
       for(int j=0;j<10;j++){

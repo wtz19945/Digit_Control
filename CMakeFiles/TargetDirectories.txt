@@ -1,3 +1,4 @@
+/home/tianze/Digit_Test/Digit_Control/CMakeFiles/digit_safety_lib.dir
 /home/tianze/Digit_Test/Digit_Control/CMakeFiles/cmake_hello.dir
 /home/tianze/Digit_Test/Digit_Control/CMakeFiles/standing_control.dir
 /home/tianze/Digit_Test/Digit_Control/CMakeFiles/standing_controlV2.dir

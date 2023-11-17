@@ -1339,6 +1339,7 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
   include/AnalyticalKinematicsDynamics/kin/p_toe_roll_joint_left_src.h \
   include/AnalyticalKinematicsDynamics/kin/p_toe_roll_joint_right_src.h \
   include/AnalyticalKinematicsDynamics/kin/p_torso_src.h \
+  include/Digit_safety.hpp \
   include/Eigen/Cholesky \
   include/Eigen/Core \
   include/Eigen/Dense \
@@ -1705,6 +1706,7 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
   /usr/include/c++/9/clocale \
   /usr/include/c++/9/cmath \
   /usr/include/c++/9/complex \
+  /usr/include/c++/9/csignal \
   /usr/include/c++/9/cstddef \
   /usr/include/c++/9/cstdint \
   /usr/include/c++/9/cstdio \
@@ -1765,6 +1767,7 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
   /usr/include/math.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
+  /usr/include/signal.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -1808,6 +1811,18 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/sigaction.h \
+  /usr/include/x86_64-linux-gnu/bits/sigcontext.h \
+  /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h \
+  /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h \
+  /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
+  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
+  /usr/include/x86_64-linux-gnu/bits/signum.h \
+  /usr/include/x86_64-linux-gnu/bits/sigstack.h \
+  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
+  /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
@@ -1828,16 +1843,23 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
@@ -1875,6 +1897,7 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/include/x86_64-linux-gnu/sys/ucontext.h \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/emmintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/mm_malloc.h \
@@ -1893,6 +1916,8 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
 
 /usr/lib/gcc/x86_64-linux-gnu/9/include/emmintrin.h:
 
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
+
 /usr/include/x86_64-linux-gnu/c++/9/bits/gthr.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/error_constants.h:
@@ -1900,8 +1925,6 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
 /usr/include/x86_64-linux-gnu/c++/9/bits/ctype_inline.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/c++locale.h:
-
-/usr/include/x86_64-linux-gnu/c++/9/bits/c++allocator.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h:
 
@@ -1915,7 +1938,43 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
+
 /usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/include/x86_64-linux-gnu/bits/ss_flags.h:
+
+/usr/include/x86_64-linux-gnu/c++/9/bits/c++allocator.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigthread.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
+
+/usr/include/x86_64-linux-gnu/bits/signal_ext.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
@@ -1944,8 +2003,6 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
 /usr/include/c++/9/system_error:
 
 /usr/include/c++/9/string:
-
-/usr/include/c++/9/stdexcept:
 
 /usr/include/c++/9/sstream:
 
@@ -1986,6 +2043,10 @@ CMakeFiles/standing_controlV2.dir/standing_controlV2.cpp.o: standing_controlV2.c
 /usr/include/c++/9/ctime:
 
 /usr/include/c++/9/cstdio:
+
+/usr/include/c++/9/stdexcept:
+
+/usr/include/c++/9/csignal:
 
 /usr/include/c++/9/clocale:
 
@@ -2143,6 +2204,8 @@ include/Eigen/src/SparseLU/SparseLU_Structs.h:
 
 include/Eigen/src/SparseLU/SparseLU_Memory.h:
 
+/usr/include/x86_64-linux-gnu/bits/sigstack.h:
+
 include/Eigen/src/SparseLU/SparseLU.h:
 
 include/Eigen/src/SparseCore/SparseView.h:
@@ -2232,6 +2295,8 @@ include/Eigen/src/Householder/HouseholderSequence.h:
 include/Eigen/src/Householder/Householder.h:
 
 include/Eigen/src/Householder/BlockHouseholder.h:
+
+include/Eigen/src/Geometry/Translation.h:
 
 include/AnalyticalKinematicsDynamics/kin/R_right_shoulder_pitch_src.h:
 
@@ -3101,6 +3166,8 @@ libartl/artl.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h:
+
 include/AnalyticalKinematicsDynamics/kin/dJp_BasePosZ_src.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
@@ -3831,6 +3898,8 @@ include/AnalyticalKinematicsDynamics/kin/dR_left_shoulder_yaw_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/T_hip_abduction_left_src.h:
 
+include/Digit_safety.hpp:
+
 include/AnalyticalKinematicsDynamics/kin/T_right_hip_yaw_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/T_right_shoulder_pitch_src.h:
@@ -3870,6 +3939,8 @@ include/AnalyticalKinematicsDynamics/kin/T_shoulder_yaw_joint_right_src.h:
 include/AnalyticalKinematicsDynamics/kin/dJb_right_toe_roll_src.h:
 
 include/AnalyticalKinematicsDynamics/kin/T_toe_pitch_joint_left_src.h:
+
+/usr/include/signal.h:
 
 include/AnalyticalKinematicsDynamics/kin/p_right_elbow_src.h:
 
@@ -4682,5 +4753,3 @@ include/Eigen/SparseCholesky:
 include/Eigen/src/Core/Transpose.h:
 
 include/Eigen/src/Geometry/Transform.h:
-
-include/Eigen/src/Geometry/Translation.h:
