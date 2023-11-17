@@ -24,9 +24,11 @@ To enable controller via low-level-api operation mode, check the following link 
 
 ## Compile the code
 To compile the code, run:
-- cmake ./
-- make standing_control
-- ./standing_control
+- mkdir build
+- cd build
+- cmake ../
+- make standing_controlV2
+- ./standing_controlV2
 
 When the operation mode is set to low-level-api, you should see optimization status from the terminal and digit starts moving.
 
