@@ -20,6 +20,8 @@
 #include "kin_right_arm.hpp"
 #include "cpptoml/include/cpptoml.h"
 #include "Digit_safety.hpp"
+#include "OSC_Control.hpp"
+#include "Filter.hpp"
 //#include "toml.hpp"
 
 // TODO: Move to head file
@@ -92,7 +94,8 @@ static double target_position[] = {
   0.33,
   0.83,
   -0.485182,
-  0.2371617,//right foot
+  0.2371617,//right foot#include "analytical_expressions.hpp"
+
   -0.3,
   0.943845,
   0.0,
@@ -124,7 +127,8 @@ int main(int argc, char* argv[])
   int QP_initialized = 0;
 
   AnalyticalExpressions analytical_expressions;
-  VectorXd q(NUM_MOTORS);
+  VectorXd q(NUM_MOTORS);using namespace Eigen;
+
   VectorXd dq(NUM_MOTORS);
   VectorXd qj(NUM_JOINTS);
   VectorXd dqj(NUM_JOINTS);
@@ -143,7 +147,6 @@ int main(int argc, char* argv[])
   theta = VectorXd::Zero(3,1);
   dtheta = VectorXd::Zero(3,1);
 
-  int matrix_fixed = 0;
   double soft_start = 1;
   // The publisher address should be changed to the ip address of the robot
   const char* publisher_address = "127.0.0.1";
@@ -177,6 +180,8 @@ int main(int argc, char* argv[])
   double cdry = config->get_qualified_as<double>("PD-Gains.com_D_gain_ry").value_or(0);
   double cdrx = config->get_qualified_as<double>("PD-Gains.com_D_gain_rx").value_or(0);
 
+  double arm_P = config->get_qualified_as<double>("PD-Gains.arm_P").value_or(0);
+
   double fpx = config->get_qualified_as<double>("PD-Gains.foot_P_x").value_or(0);
   double fpy = config->get_qualified_as<double>("PD-Gains.foot_P_y").value_or(0);
   double fpz = config->get_qualified_as<double>("PD-Gains.foot_P_z").value_or(0);
@@ -191,7 +196,6 @@ int main(int argc, char* argv[])
   double force_max = config->get_qualified_as<double>("QP-Params.force_max").value_or(0);
   double mu = config->get_qualified_as<double>("QP-Params.mu").value_or(0);
 
-  double arm_P = config->get_qualified_as<double>("PD-Gains.arm_P").value_or(0);
   int wd_sz = config->get_qualified_as<double>("Filter.wd_sz").value_or(0);
 
   // Weight Matrix and Gain Vector
@@ -219,6 +223,7 @@ int main(int argc, char* argv[])
   VectorXd f_limit_min = VectorXd::Zero(12,1);   // contact force
   VectorXd f_cons_min = VectorXd::Zero(16,1);    // friction constraint limit
   VectorXd qt = VectorXd::Zero(14,1);
+
   for(int i=0;i<20;i++){
     ddq_limit(i) = OsqpEigen::INFTY;
   }
@@ -263,6 +268,13 @@ int main(int argc, char* argv[])
 
   // initialize safety checker
   Digit_safety safe_check(wd_sz,NUM_LEG_STATE);
+
+  // initialize OSC solver
+  OSC_Control osc(config);
+
+  // initialize Filter
+  MovingAverageFilter pel_vel_x; 
+  MovingAverageFilter pel_vel_y;
 
   while (1) {
     
@@ -310,8 +322,13 @@ int main(int argc, char* argv[])
     dtheta = OmegaToDtheta * dtheta;
 
     MatrixXd rotZ = MatrixXd::Zero(3,3);
-    rotZ << cos(theta(2)),-sin(theta(2)),0,sin(theta(2)),cos(theta(2)),0,0,0,1;
+    rotZ << cos(yaw_des),-sin(yaw_des),0,sin(yaw_des),cos(yaw_des),0,0,0,1;
+
+    pel_vel(0) = pel_vel_x.getData(pel_vel(0));
+    pel_vel(1) = pel_vel_y.getData(pel_vel(1));
+
     pel_pos = rotZ.transpose() * pel_pos;
+    // pel_vel = rotZ.transpose() * pel_vel;
     // Controller does not work when velocity transformation is included. Why???
     // pel_vel = rotZ.transpose() * pel_vel; 
     // Wrap yaw orientation so the desired yaw is always 0
@@ -436,8 +453,6 @@ int main(int argc, char* argv[])
 
 
     // Control another contact point on toe back to enable foot rotation control
-
-
     VectorXd left_toe_rot  = VectorXd::Zero(4,1);
     VectorXd left_toe_drot = VectorXd::Zero(4,1);
     MatrixXd left_toe_rot_jaco_fa = MatrixXd::Zero(4,20);
@@ -503,199 +518,32 @@ int main(int argc, char* argv[])
 
     elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
     cout << "time used to compute system dyn and kin + acc + QP Form: " << elapsed_time.count() << endl;
+    
     // Solve OSC QP
-
-    solver.data()->setNumberOfVariables(Vars_Num);
-    solver.data()->setNumberOfConstraints(Cons_Num);
-    Eigen::SparseMatrix<double> hessian;
-    Eigen::VectorXd gradient(Vars_Num,1);
- 
-    Eigen::VectorXd lowerBound(Cons_Num,1);
-    Eigen::VectorXd upperBound(Cons_Num,1);
-    Eigen::VectorXd QPSolution;
-
-    hessian.resize(Vars_Num,Vars_Num);
-
-
-    // Construct QP Matrix
-    // gradient
-    /*VectorXd ddp_grad = -2 * (left_toe_jaco_fa.block(0,6,3,14)).transpose() * Weight_ToeF.block(0,0,3,3) * des_acc.block(0,0,3,1)
-                    -2 * (left_toe_rot_jaco_fa.block(0,6,4,14)).transpose() * Weight_ToeB.block(0,0,4,4) * des_acc_toe.block(0,0,4,1)
-                    -2 * (right_toe_jaco_fa.block(0,6,3,14)).transpose() * Weight_ToeF.block(3,3,3,3) * des_acc.block(3,0,3,1)
-                    -2 * (right_toe_rot_jaco_fa.block(0,6,4,14)).transpose() * Weight_ToeB.block(4,4,4,4) * des_acc_toe.block(4,0,4,1);
-    */
-    /*VectorXd ddp_grad = -(left_toe_jaco_fa).transpose() * Weight_ToeF.block(0,0,3,3) * des_acc.block(0,0,3,1)
-                    -(left_toe_rot_jaco_fa).transpose() * Weight_ToeB.block(0,0,4,4) * des_acc_toe.block(0,0,4,1)
-                    -(right_toe_jaco_fa).transpose() * Weight_ToeF.block(3,3,3,3) * des_acc.block(3,0,3,1)
-                    -(right_toe_rot_jaco_fa).transpose() * Weight_ToeB.block(4,4,4,4) * des_acc_toe.block(4,0,4,1)
-                    -pel_jaco.transpose() * Weight_pel * des_acc_pel;
-    gradient << ddp_grad, VectorXd::Zero(28,1);*/
-
-    //VectorXd ddp_grad(20,1);
-    //ddp_grad << -des_acc.block(0,0,3,1),des_acc_toe.block(0,0,4,1),des_acc.block(3,0,3,1),des_acc_toe.block(4,0,4,1),
-    gradient << -Weight_pel * des_acc_pel, VectorXd::Zero(42,1),-Weight_ToeF.block(0,0,3,3) * des_acc.block(0,0,3,1),
-                -Weight_ToeB.block(0,0,4,4) * des_acc_toe.block(0,0,4,1),
-                -Weight_ToeF.block(3,3,3,3) * des_acc.block(3,0,3,1),
-                -Weight_ToeB.block(4,4,4,4) * des_acc_toe.block(4,0,4,1);
-                
-
-    // upper and lower bounds
-    for(int i=0;i<12;i++){
-      f_limit_max(i) = force_max * mu;
-      f_limit_min(i) = -force_max * mu;
-    }
-    f_limit_max(2) = force_max;
-    f_limit_max(5) = force_max;
-    f_limit_max(8) = force_max;
-    f_limit_max(11) = force_max;
-    f_limit_min(2) = 0;
-    f_limit_min(5) = 0;
-    f_limit_min(8) = 0;
-    f_limit_min(11) = 0;
-    elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-    cout << "compute vectors: " << elapsed_time.count() << endl;
-
-    // Concatenate bound vector
-    lowerBound << -G + D_term, VectorXd::Zero(4,1) , -ddq_limit, -u_limit, -tor_limit, f_limit_min, -qt,f_cons_min,VectorXd::Zero(14,1);
-    upperBound << -G + D_term, VectorXd::Zero(4,1) ,  ddq_limit,  u_limit, tor_limit , f_limit_max, qt, VectorXd::Zero(16,1),VectorXd::Zero(14,1);
-    elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-    cout << "compute vectors: " << elapsed_time.count() << endl;
-    // Hessian Matrix
-    /*hessian_full.block(0,0,20,20) = 1*(left_toe_jaco_fa).transpose() * Weight_ToeF.block(0,0,3,3) * left_toe_jaco_fa
-                                   +1*(left_toe_rot_jaco_fa).transpose() * Weight_ToeB.block(0,0,4,4) * left_toe_rot_jaco_fa
-                                   +1*(right_toe_jaco_fa).transpose() * Weight_ToeF.block(3,3,3,3) * right_toe_jaco_fa
-                                   +1*(right_toe_rot_jaco_fa).transpose() * Weight_ToeB.block(4,4,4,4) * right_toe_rot_jaco_fa
-                                   +1*pel_jaco.transpose() * Weight_pel * pel_jaco;*/
-    hessian_full.block(0,0,6,6) = Weight_pel;
-    hessian_full.block(48,48,3,3) = Weight_ToeF.block(0,0,3,3);
-    hessian_full.block(51,51,4,4) = Weight_ToeB.block(0,0,4,4);
-    hessian_full.block(55,55,3,3) = Weight_ToeF.block(3,3,3,3);
-    hessian_full.block(58,58,4,4) = Weight_ToeB.block(4,4,4,4);
-    for(int i = 0;i<hessian_full.rows();i++){
-      if(i<6||i>48){
-        hessian.insert(i,i) = hessian_full(i,i);
-      }
-    }
-
-    elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-    cout << "assign value to hessian matrix: " << elapsed_time.count() << endl;
-    // Works like reflected inertia. Otherwise, need to have large P gains. But is is modeled in the mujoco sim?
-    // Important Question??? seems not helping in standing phase. Maybe it is because the cross terms are not considered in
-    // the fixed base controller
-
-
-    // Constraint Matrix
-    if(QP_initialized == 0){
-      // compute the full matrix and store the non-zero index during initialization 
-      constraint_full.block(0,0,20,20) = M - damping_dt * Dmat;
-      constraint_full.block(0,20,20,12) = -B;
-      constraint_full.block(0,32,20,4) = -(Spring_Jaco).transpose();
-      constraint_full.block(0,36,20,3) = -left_toe_jaco_fa.transpose();
-      constraint_full.block(0,39,20,3) = -left_toe_back_jaco_fa.transpose();
-      constraint_full.block(0,42,20,3) = -right_toe_jaco_fa.transpose();
-      constraint_full.block(0,45,20,3) = -right_toe_back_jaco_fa.transpose();
-      constraint_full.block(20,0,4,20) = Spring_Jaco;
-      constraint_full.block(24,0,Vars_Num,Vars_Num) = MatrixXd::Identity(Vars_Num,Vars_Num);
-      constraint_full.block(24+Vars_Num,Vars_Num-12,16,12) = get_fric_constraint(mu);
-      constraint_full.block(40+Vars_Num,0,3,20) = left_toe_jaco_fa;
-      constraint_full.block(43+Vars_Num,0,4,20) = left_toe_rot_jaco_fa;
-      constraint_full.block(47+Vars_Num,0,3,20) = right_toe_jaco_fa;
-      constraint_full.block(50+Vars_Num,0,4,20) = right_toe_rot_jaco_fa;
-      constraint_full.block(40+Vars_Num,Vars_Num-14,14,14) = -MatrixXd::Identity(14,14);
-
-      elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-      cout << "formulate constraint matrix: " << elapsed_time.count() << endl;
-      for(int i = 0;i<constraint_full.cols();i++){
-        for(int j = 0;j<constraint_full.rows();j++){
-          if(constraint_full(j,i) != 0){
-            coefficients.push_back(Eigen::Triplet<double>(j,i,constraint_full(j,i)));
-            linearMatrix.insert(j,i) = constraint_full(j,i);
-          }
-        }
-      }
-    }
-    else{
-      // constant matrix like B is not updated
-      constraint_full.block(0,0,20,20) = M - damping_dt * Dmat;
-      //constraint_full.block(0,20,20,12) = -B;
-      //constraint_full.block(0,32,20,4) = -(Spring_Jaco).transpose();
-      constraint_full.block(0,36,20,3) = -left_toe_jaco_fa.transpose();
-      constraint_full.block(0,39,20,3) = -left_toe_back_jaco_fa.transpose();
-      constraint_full.block(0,42,20,3) = -right_toe_jaco_fa.transpose();
-      constraint_full.block(0,45,20,3) = -right_toe_back_jaco_fa.transpose();
-      //constraint_full.block(20,0,4,20) = Spring_Jaco;
-      //constraint_full.block(24,0,Vars_Num,Vars_Num) = MatrixXd::Identity(Vars_Num,Vars_Num);
-      //constraint_full.block(24+Vars_Num,Vars_Num-12,16,12) = get_fric_constraint(mu);
-      constraint_full.block(40+Vars_Num,0,3,20) = left_toe_jaco_fa;
-      constraint_full.block(43+Vars_Num,0,4,20) = left_toe_rot_jaco_fa;
-      constraint_full.block(47+Vars_Num,0,3,20) = right_toe_jaco_fa;
-      constraint_full.block(50+Vars_Num,0,4,20) = right_toe_rot_jaco_fa;
-      //constraint_full.block(40+Vars_Num,Vars_Num-14,14,14) = -MatrixXd::Identity(14,14);
-      
-      // Speed up setting constraint matrix by assuming all non-zeros' indexes are fixed
-      int coeff_iter = 0;
-      for (int k=0; k<linearMatrix.outerSize(); ++k){
-        for (SparseMatrix<double>::InnerIterator it(linearMatrix,k); it; ++it){
-          it.valueRef() = constraint_full(coefficients[coeff_iter].row(),coefficients[coeff_iter].col());
-          coeff_iter++;
-        }
-      }
-      
-      /*
-      elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-      cout << "formulate constraint matrix: " << elapsed_time.count() << endl;
-      std::vector<Eigen::Triplet<double>> coefficients1;            // list of non-zeros coefficients 
-      for(auto T:coefficients){
-        coefficients1.push_back(Eigen::Triplet<double>(T.row(),T.col(),constraint_full(T.row(),T.col())));
-      }
-      elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
-      cout << "formulate constraint matrix: " << elapsed_time.count() << endl;
-
-      linearMatrix.setFromTriplets(coefficients1.begin(), coefficients1.end());*/
-      /*
-      for(int i = 0;i<constraint_full.rows();i++){
-        if(i<20){
-          for(int j = 0;j<48;j++){
-              if(constraint_full(i,j) != 0){
-                //linearMatrix.insert(i,j) = constraint_full(i,j);
-              }
-          }
-        }
-        if(i>40+Vars_Num){
-          for(int j = 0;j<20;j++){
-              if(constraint_full(i,j) != 0){
-                //linearMatrix.insert(i,j) = constraint_full(i,j);
-              }
-          }
-          for(int j = 0;j>Vars_Num-14;j++){
-              if(constraint_full(i,j) != 0){
-                //linearMatrix.insert(i,j) = constraint_full(i,j);
-              }
-          }
-        }
-
-      }*/
-    }
     elapsed_time = duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_program_start);
     cout << "set up sparse constraint: " << elapsed_time.count() << endl;
     if(QP_initialized == 0){
-      solver.data()->setHessianMatrix(hessian);
-      solver.data()->setGradient(gradient);
-      solver.data()->setLinearConstraintsMatrix(linearMatrix);
-      solver.data()->setLowerBound(lowerBound);
-      solver.data()->setUpperBound(upperBound);
-      solver.initSolver();
       QP_initialized = 1;
+      osc.setupQPVector(des_acc_pel, des_acc, des_acc_toe, G);
+      osc.setupQPMatrix(Weight_pel, Weight_ToeF, Weight_ToeB, M, 
+                        B, Spring_Jaco, left_toe_jaco_fa, 
+                        left_toe_back_jaco_fa, right_toe_jaco_fa, right_toe_back_jaco_fa,
+                        left_toe_rot_jaco_fa, right_toe_rot_jaco_fa);
+      osc.setUpQP();
     }
     else{
-      solver.updateGradient(gradient);
-      solver.updateHessianMatrix(hessian);
-      solver.updateLinearConstraintsMatrix(linearMatrix);
-      solver.updateBounds(lowerBound,upperBound);
+      osc.updateQPVector(des_acc_pel, des_acc, des_acc_toe, G);
+      osc.updateQPMatrix(Weight_pel, Weight_ToeF, Weight_ToeB, M, 
+                        B, Spring_Jaco, left_toe_jaco_fa, 
+                        left_toe_back_jaco_fa, right_toe_jaco_fa, right_toe_back_jaco_fa,
+                        left_toe_rot_jaco_fa, right_toe_rot_jaco_fa);
+      osc.updateQP();
     }
 
-    solver.solveProblem();
-    QPSolution = solver.getSolution();
+    //solver.solveProblem();
+    //QPSolution = solver.getSolution();
+    
+    VectorXd QPSolution = osc.solveQP();
     VectorXd torque = VectorXd::Zero(12,1);
     for(int i = 0;i<12;i++)
       torque(i) = QPSolution(20+i);
@@ -724,6 +572,8 @@ int main(int argc, char* argv[])
       else
         wb_dq_next(i) = wb_dq(8+i) + damping_dt * QPSolution(8+i);
     }
+
+    
 /*
     // arm control, trial implementation. Incorporate to analytical_expressions class in the future
     

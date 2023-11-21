@@ -42,6 +42,17 @@ target_include_directories(digit_safety_lib
     PUBLIC 
     ${Home_Dir}/include)
 
+add_library(osc_lib STATIC src/OSC_Control.cpp)
+target_include_directories(osc_lib 
+    PUBLIC 
+    ${Home_Dir}/include)
+target_link_libraries(osc_lib OsqpEigen::OsqpEigen)
+
+add_library(filter_lib STATIC src/Filter.cpp)
+target_include_directories(filter_lib 
+    PUBLIC 
+    ${Home_Dir}/include)
+
 add_executable(cmake_hello ${SOURCES})
 target_link_libraries(cmake_hello OsqpEigen::OsqpEigen kinematics_dynamics_lib)
 
@@ -49,4 +60,4 @@ add_executable(standing_control ${standing_SOURCES})
 target_link_libraries(standing_control OsqpEigen::OsqpEigen kinematics_dynamics_lib)
 
 add_executable(standing_controlV2 ${standing_SOURCESV2})
-target_link_libraries(standing_controlV2 OsqpEigen::OsqpEigen kinematics_dynamics_lib digit_safety_lib)
+target_link_libraries(standing_controlV2 OsqpEigen::OsqpEigen kinematics_dynamics_lib digit_safety_lib osc_lib filter_lib)
